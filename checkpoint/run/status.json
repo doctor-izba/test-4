@@ -28,14 +28,20 @@
     "summary": "Durable checkpoint saved; continue in the next constructive cycle"
   },
   "simulation": {
-    "time": "2026-11-03T11:15:46.187870+00:00",
+    "time": "2026-11-03T11:17:25.155077+00:00",
     "role": "simulation",
+    "event": "retry_paused",
+    "summary": "Transient retry allowance exhausted; all uncertain reservations retained"
+  },
+  "reviewer": {
+    "time": "2026-11-03T11:18:15.218795+00:00",
+    "role": "reviewer",
     "event": "request",
-    "call_id": "simulation-149cd2a62c86",
-    "attempt": 4,
-    "request_bytes": 130553,
-    "input_bound": 134649,
-    "max_output_tokens": 65536,
+    "call_id": "reviewer-e204619c61b6",
+    "attempt": 1,
+    "request_bytes": 54332,
+    "input_bound": 58428,
+    "max_output_tokens": 393216,
     "requested_reasoning": "max"
   }
 }

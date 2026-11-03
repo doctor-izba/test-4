@@ -1,7 +1,7 @@
 {
   "limit_usd": "3.23",
-  "confirmed_usd": "0.0750361050",
-  "reserved_usd": "1.658777130",
+  "confirmed_usd": "0.0790928550",
+  "reserved_usd": "2.201643045",
   "reservations": {
     "preflight-0ab1d3ba6f77": "0.001381725",
     "preflight-8894fc749c34": "0.00138186",
@@ -18,7 +18,11 @@
     "simulation-6dc2e8b7507e": "0.230514255",
     "simulation-248b1f5aa7e1": "0.053567055",
     "simulation-b6baa6a8c874": "0.053567055",
-    "simulation-149cd2a62c86": "0.053567055"
+    "simulation-149cd2a62c86": "0.053567055",
+    "simulation-6dc302c371e3": "0.053567055",
+    "simulation-de7fb015c0a3": "0.053567055",
+    "reviewer-32a81c92f553": "0.215507385",
+    "reviewer-e204619c61b6": "0.22022442"
   },
   "reservation_states": {
     "preflight-0ab1d3ba6f77": "uncertain",
@@ -36,7 +40,11 @@
     "simulation-6dc2e8b7507e": "uncertain",
     "simulation-248b1f5aa7e1": "uncertain",
     "simulation-b6baa6a8c874": "uncertain",
-    "simulation-149cd2a62c86": "active"
+    "simulation-149cd2a62c86": "uncertain",
+    "simulation-6dc302c371e3": "uncertain",
+    "simulation-de7fb015c0a3": "uncertain",
+    "reviewer-32a81c92f553": "uncertain",
+    "reviewer-e204619c61b6": "active"
   },
   "stop_reason": null,
   "calls": [
@@ -338,6 +346,54 @@
       "id": "simulation-b6baa6a8c874",
       "state": "uncertain",
       "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-149cd2a62c86",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-6dc302c371e3",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-de7fb015c0a3",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-279d58c7499a",
+      "prompt_tokens": 2626,
+      "completion_tokens": 113,
+      "cached_tokens": 0,
+      "usd": "0.00041553"
+    },
+    {
+      "id": "reviewer-32a81c92f553",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-9e25b639292d",
+      "prompt_tokens": 4324,
+      "completion_tokens": 207,
+      "cached_tokens": 0,
+      "usd": "0.00069552"
+    },
+    {
+      "id": "reviewer-a1e2368be1f2",
+      "prompt_tokens": 7076,
+      "completion_tokens": 299,
+      "cached_tokens": 0,
+      "usd": "0.00111672"
+    },
+    {
+      "id": "reviewer-1dea7b87cecc",
+      "prompt_tokens": 12020,
+      "completion_tokens": 382,
+      "cached_tokens": 0,
+      "usd": "0.00182898"
     }
   ],
   "rates_usd_per_million": {

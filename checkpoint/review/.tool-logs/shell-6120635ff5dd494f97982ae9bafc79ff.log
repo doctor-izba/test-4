@@ -1,0 +1,265 @@
+/bin/bash: line 1: cd: review: No such file or directory
+{
+  "scope": "Supplementary surrogate only. Assignment explicitly requires MATLAB and CoppeliaSim.",
+  "assumptions": [
+    "Ideal instantaneous wheel-rate actuator",
+    "2D rectangular footprint and axis-aligned solid wall polygons",
+    "Ideal ray proximity sensors, no beam volume/noise",
+    "No rigid-body contact dynamics; stop at first geometric contact",
+    "Fixed declared geometry; not independently calibrated Pioneer dimensions"
+  ],
+  "cases": [
+    {
+      "case": "goal",
+      "evidence_type": "ideal_2d_kinematic_surrogate",
+      "completed": true,
+      "final_state": "hold",
+      "duration_s": 10.600000000000001,
+      "stop_time_s": 9.600000000000001,
+      "collision": false,
+      "minimum_clearance_m": null,
+      "final_clearance_m": null,
+      "final_estimated_pose": [
+        0.7662308340636792,
+        0.47876825144810975,
+        0.04721949377684309
+      ],
+      "final_actual_pose": [
+        0.7662308340636792,
+        0.47876825144810975,
+        0.04721949377684309
+      ],
+      "odometry_error": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "speed_m_s": 0.14,
+      "sample_s": 0.05,
+      "slip_fraction": 0.0,
+      "hold_s": 1.0000000000000002,
+      "estimated_goal_position_error_m": 0.03988914281612812,
+      "estimated_goal_heading_error_deg": 2.7054777041573645
+    },
+    {
+      "case": "approach",
+      "evidence_type": "ideal_2d_kinematic_surrogate",
+      "completed": true,
+      "final_state": "hold",
+      "duration_s": 14.600000000000001,
+      "stop_time_s": 13.600000000000001,
+      "collision": false,
+      "minimum_clearance_m": 0.20181060426827746,
+      "final_clearance_m": 0.20181060426827746,
+      "final_estimated_pose": [
+        1.2981893957317225,
+        0.0,
+        0.0
+      ],
+      "final_actual_pose": [
+        1.2981893957317225,
+        0.0,
+        0.0
+      ],
+      "odometry_error": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "speed_m_s": 0.14,
+      "sample_s": 0.05,
+      "slip_fraction": 0.0,
+      "hold_s": 1.0000000000000002
+    },
+    {
+      "case": "corner_slow",
+      "evidence_type": "ideal_2d_kinematic_surrogate",
+      "completed": true,
+      "final_state": "hold",
+      "duration_s": 45.7,
+      "stop_time_s": 44.7,
+      "collision": false,
+      "minimum_clearance_m": 0.1916725336722478,
+      "final_clearance_m": 0.4305958960439318,
+      "final_estimated_pose": [
+        2.353432136230355,
+        -0.8694016156154107,
+        -1.4517466310294216
+      ],
+      "final_actual_pose": [
+        2.353432136230355,
+        -0.8694016156154107,
+        -1.4517466310294216
+      ],
+      "odometry_error": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "speed_m_s": 0.08,
+      "sample_s": 0.05,
+      "slip_fraction": 0.0,
+      "hold_s": 1.0000000000000002,
+      "first_straight_progress_m": 2.1200000000000014,
+      "second_section_displacement_m": 1.202280638262676,
+      "second_wall_parallel_progress_m": 1.1794016156154108,
+      "mean_abs_straight_clearance_error_m": 0.07924741166697762,
+      "max_abs_straight_clearance_error_m": 0.38466300483506083
+    },
+    {
+      "case": "corner_fast",
+      "evidence_type": "ideal_2d_kinematic_surrogate",
+      "completed": true,
+      "final_state": "hold",
+      "duration_s": 27.900000000000002,
+      "stop_time_s": 26.900000000000002,
+      "collision": false,
+      "minimum_clearance_m": 0.1916725336722478,
+      "final_clearance_m": 0.4296686492051607,
+      "final_estimated_pose": [
+        2.35388996608578,
+        -0.8696253003417284,
+        -1.4494630215751736
+      ],
+      "final_actual_pose": [
+        2.35388996608578,
+        -0.8696253003417284,
+        -1.4494630215751736
+      ],
+      "odometry_error": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "speed_m_s": 0.14,
+      "sample_s": 0.05,
+      "slip_fraction": 0.0,
+      "hold_s": 1.0000000000000002,
+      "first_straight_progress_m": 2.120999999999988,
+      "second_section_displacement_m": 1.2023949374102312,
+      "second_wall_parallel_progress_m": 1.1796253003417283,
+      "mean_abs_straight_clearance_error_m": 0.08033885057057111,
+      "max_abs_straight_clearance_error_m": 0.38366300483507426
+    }
+  ]
+}=== stdout ===
+{
+  "scope": "Supplementary surrogate only. Assignment explicitly requires MATLAB and CoppeliaSim.",
+  "assumptions": [
+    "Ideal instantaneous wheel-rate actuator",
+    "2D rectangular footprint and axis-aligned solid wall polygons",
+    "Ideal ray proximity sensors, no beam volume/noise",
+    "No rigid-body contact dynamics; stop at first geometric contact",
+    "Fixed declared geometry; not independently calibrated Pioneer dimensions"
+  ],
+  "cases": [
+    {
+      "case": "goal",
+      "evidence_type": "ideal_2d_kinematic_surrogate",
+      "completed": true,
+      "final_state": "hold",
+      "duration_s": 10.600000000000001,
+      "stop_time_s": 9.600000000000001,
+      "collision": false,
+      "minimum_clearance_m": null,
+      "final_clearance_m": null,
+      "final_estimated_pose": [
+        0.7662308340636792,
+        0.47876825144810975,
+        0.04721949377684309
+      ],
+      "final_actual_pose": [
+        0.7662308340636792,
+        0.47876825144810975,
+        0.04721949377684309
+      ],
+      "odometry_error": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "speed_m_s": 0.14,
+      "sample_s": 0.05,
+      "slip_fraction": 0.0,
+      "hold_s": 1.0000000000000002,
+      "estimated_goal_position_error_m": 0.03988914281612812,
+      "estimated_goal_heading_error_deg": 2.7054777041573645
+    },
+    {
+      "case": "approach",
+      "evidence_type": "ideal_2d_kinematic_surrogate",
+      "completed": true,
+      "final_state": "hold",
+      "duration_s": 14.600000000000001,
+      "stop_time_s": 13.600000000000001,
+      "collision": false,
+      "minimum_clearance_m": 0.20181060426827746,
+      "final_clearance_m": 0.20181060426827746,
+      "final_estimated_pose": [
+        1.2981893957317225,
+        0.0,
+        0.0
+      ],
+      "final_actual_pose": [
+        1.2981893957317225,
+        0.0,
+        0.0
+      ],
+      "odometry_error": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "speed_m_s": 0.14,
+      "sample_s": 0.05,
+      "slip_fraction": 0.0,
+      "hold_s": 1.0000000000000002
+    },
+    {
+      "case": "corner_slow",
+      "evidence_type": "ideal_2d_kinematic_surrogate",
+      "completed": true,
+      "final_state": "hold",
+      "duration_s": 45.7,
+      "stop_time_s": 44.7,
+      "collision": false,
+      "minimum_clearance_m": 0.1916725336722478,
+      "final_clearance_m": 0.4305958960439318,
+      "final_estimated_pose": [
+        2.353432136230355,
+        -0.8694016156154107,
+        -1.4517466310294216
+      ],
+      "final_actual_pose": [
+        2.353432136230355,
+        -0.8694016156154107,
+        -1.4517466310294216
+      ],
+      "odometry_error": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "speed_m_s": 0.08,
+      "sample_s": 0.05,
+      "slip_fraction": 0.0,
+      "hold_s": 1.0000000000000002,
+      "first_straight_progress_m": 2.1200000000000014,
+      "second_section_displacement_m": 1.202280638262676,
+      "second_wall_parallel_progress_m": 1.1794016156154108,
+      "mean_ab
+=== unit tests ===
+test_counterclockwise_transform_rejects_wrong_sign (simulation.test_simulation.GeometryTests.test_counterclockwise_transform_rejects_wrong_sign) ... ok
+test_intersection_and_containment_have_zero_distance (simulation.test_simulation.GeometryTests.test_intersection_and_containment_have_zero_distance) ... ok
+test_ray_detection_and_no_detection (simulation.test_simulation.GeometryTests.test_ray_detection_and_no_detection) ... ok
+test_common_wheel_limit_and_ratio (simulation.test_simulation.PolicyTests.test_common_wheel_limit_and_ratio) ... ok
+test_front_gate_all_behavior_outputs_and_threshold (simulation.test_simulation.PolicyTests.test_front_gate_all_behavior_outputs_and_threshold) ... ok
+test_midpoint_odometry_measured_increment (simulation.test_simulation.PolicyTests.test_midpoint_odometry_measured_increment) ... ok
+test_swept_circle_bound_refuses_narrow_turn (simulation.test_simulation.PolicyTests.test_swept_circle_bound_refuses_narrow_turn) ... ok
+test_timer_detects_frozen_mutant_and_bounded_fallback (simulation.test_simulation.PolicyTests.test_timer_detects_frozen_mutant_and_bounded_fallback) ... ok
+test_wrap_endpoint_and_range_rejects_atan_endpoint_mutant (simulation.test_simulation.PolicyTests.test_wrap_endpoint_and_range_rejects_atan_endpoint_mutant) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+OK

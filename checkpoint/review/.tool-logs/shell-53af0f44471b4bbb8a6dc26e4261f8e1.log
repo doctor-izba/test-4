@@ -1,0 +1,14 @@
+total 24
+drwxr-xr-x  6 runner runner 4096 Nov  3 11:11 .
+drwxr-xr-x 15 runner runner 4096 Nov  3 11:11 ..
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:11 .home
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:17 .tool-logs
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:08 lean-check
+drwxr-xr-x  3 runner runner 4096 Nov  3 11:08 rerun
+---
+.
+./.tool-logs
+./lean-check
+./rerun
+./rerun/results
+./.home
