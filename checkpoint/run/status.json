@@ -14,35 +14,27 @@
     "summary": "Research/proof/simulation slice, then independent review and report"
   },
   "research": {
-    "time": "2026-11-03T11:13:52.921416+00:00",
+    "time": "2026-11-03T11:14:14.204819+00:00",
     "role": "research",
-    "event": "request",
-    "call_id": "research-0c5afd8e8a0a",
-    "attempt": 1,
-    "request_bytes": 186197,
-    "input_bound": 190293,
-    "max_output_tokens": 393216,
-    "requested_reasoning": "max"
+    "event": "slice_yielded",
+    "rounds": 12,
+    "summary": "Durable checkpoint saved; continue in the next constructive cycle"
   },
   "lean": {
-    "time": "2026-11-03T11:13:18.403217+00:00",
+    "time": "2026-11-03T11:14:33.335604+00:00",
     "role": "lean",
-    "event": "request",
-    "call_id": "lean-6faa3a0454d0",
-    "attempt": 1,
-    "request_bytes": 90684,
-    "input_bound": 94780,
-    "max_output_tokens": 393216,
-    "requested_reasoning": "max"
+    "event": "slice_yielded",
+    "rounds": 12,
+    "summary": "Durable checkpoint saved; continue in the next constructive cycle"
   },
   "simulation": {
-    "time": "2026-11-03T11:13:14.147489+00:00",
+    "time": "2026-11-03T11:15:46.187870+00:00",
     "role": "simulation",
     "event": "request",
-    "call_id": "simulation-85f724e7482e",
-    "attempt": 3,
-    "request_bytes": 65551,
-    "input_bound": 69647,
+    "call_id": "simulation-149cd2a62c86",
+    "attempt": 4,
+    "request_bytes": 130553,
+    "input_bound": 134649,
     "max_output_tokens": 65536,
     "requested_reasoning": "max"
   }

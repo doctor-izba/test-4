@@ -1,7 +1,7 @@
 {
   "limit_usd": "3.23",
-  "confirmed_usd": "0.0468174870",
-  "reserved_usd": "1.775511630",
+  "confirmed_usd": "0.0750361050",
+  "reserved_usd": "1.658777130",
   "reservations": {
     "preflight-0ab1d3ba6f77": "0.001381725",
     "preflight-8894fc749c34": "0.00138186",
@@ -15,9 +15,10 @@
     "research-5bf242938552": "0.056672325",
     "simulation-b228357b2dd1": "0.044791785",
     "lean-177d3caa7bfe": "0.04624722",
-    "simulation-85f724e7482e": "0.044791785",
-    "lean-6faa3a0454d0": "0.22513194",
-    "research-0c5afd8e8a0a": "0.238026195"
+    "simulation-6dc2e8b7507e": "0.230514255",
+    "simulation-248b1f5aa7e1": "0.053567055",
+    "simulation-b6baa6a8c874": "0.053567055",
+    "simulation-149cd2a62c86": "0.053567055"
   },
   "reservation_states": {
     "preflight-0ab1d3ba6f77": "uncertain",
@@ -32,9 +33,10 @@
     "research-5bf242938552": "uncertain",
     "simulation-b228357b2dd1": "uncertain",
     "lean-177d3caa7bfe": "uncertain",
-    "simulation-85f724e7482e": "active",
-    "lean-6faa3a0454d0": "active",
-    "research-0c5afd8e8a0a": "active"
+    "simulation-6dc2e8b7507e": "uncertain",
+    "simulation-248b1f5aa7e1": "uncertain",
+    "simulation-b6baa6a8c874": "uncertain",
+    "simulation-149cd2a62c86": "active"
   },
   "stop_reason": null,
   "calls": [
@@ -272,6 +274,70 @@
       "completion_tokens": 519,
       "cached_tokens": 45824,
       "usd": "0.0007366248"
+    },
+    {
+      "id": "research-0c5afd8e8a0a",
+      "prompt_tokens": 50706,
+      "completion_tokens": 2610,
+      "cached_tokens": 48128,
+      "usd": "0.0018873756"
+    },
+    {
+      "id": "lean-6faa3a0454d0",
+      "prompt_tokens": 26549,
+      "completion_tokens": 9022,
+      "cached_tokens": 0,
+      "usd": "0.008455995"
+    },
+    {
+      "id": "research-c80dcd8abf22",
+      "prompt_tokens": 54419,
+      "completion_tokens": 187,
+      "cached_tokens": 50560,
+      "usd": "0.000758457"
+    },
+    {
+      "id": "lean-7c06eefb9ba3",
+      "prompt_tokens": 35773,
+      "completion_tokens": 194,
+      "cached_tokens": 0,
+      "usd": "0.004934115"
+    },
+    {
+      "id": "lean-37b3a22c7fa2",
+      "prompt_tokens": 36141,
+      "completion_tokens": 171,
+      "cached_tokens": 35584,
+      "usd": "0.0002636118"
+    },
+    {
+      "id": "lean-1bde1801d5f8",
+      "prompt_tokens": 36446,
+      "completion_tokens": 222,
+      "cached_tokens": 35968,
+      "usd": "0.0002815236"
+    },
+    {
+      "id": "simulation-85f724e7482e",
+      "prompt_tokens": 17336,
+      "completion_tokens": 17217,
+      "cached_tokens": 0,
+      "usd": "0.01163754"
+    },
+    {
+      "id": "simulation-6dc2e8b7507e",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-248b1f5aa7e1",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-b6baa6a8c874",
+      "state": "uncertain",
+      "cause": "HTTP 502"
     }
   ],
   "rates_usd_per_million": {
