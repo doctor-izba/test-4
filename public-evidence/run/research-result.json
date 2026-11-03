@@ -1,0 +1,6 @@
+{
+  "state": "step_limit",
+  "steps": 40,
+  "tool_calls": 68,
+  "final_text": ""
+}
