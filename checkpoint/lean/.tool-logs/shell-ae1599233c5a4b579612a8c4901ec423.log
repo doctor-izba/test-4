@@ -1,0 +1,40 @@
+/home/runner/work/test-4/test-4/lean
+total 120
+drwxr-xr-x  5 runner runner  4096 Nov  3 08:26 .
+drwxr-xr-x 15 runner runner  4096 Nov  3 08:26 ..
+drwxr-xr-x  2 runner runner  4096 Nov  3 08:26 .home
+drwxr-xr-x  4 runner runner  4096 Nov  3 08:25 .lake
+drwxr-xr-x  2 runner runner  4096 Nov  3 08:26 .tool-logs
+-rw-r--r--  1 runner runner 22347 Nov  3 08:24 Assignment4Verification.lean
+-rw-r--r--  1 runner runner  3122 Nov  3 08:24 AxiomAudit.lean
+-rw-r--r--  1 runner runner  2075 Nov  3 08:24 README.md
+-rw-r--r--  1 runner runner   880 Nov  3 08:24 RefProbe.lean
+-rw-r--r--  1 runner runner 10227 Nov  3 08:24 Scratch.lean
+-rw-r--r--  1 runner runner  6209 Nov  3 08:24 axioms.log
+-rw-r--r--  1 runner runner  1851 Nov  3 08:24 build.log
+-rw-r--r--  1 runner runner  2234 Nov  3 08:24 check_local.py
+-rw-r--r--  1 runner runner  6209 Nov  3 08:24 final-axioms.log
+-rw-r--r--  1 runner runner  1847 Nov  3 08:24 final-build.log
+-rw-r--r--  1 runner runner  3146 Nov  3 08:24 lake-manifest.json
+-rw-r--r--  1 runner runner   251 Nov  3 08:24 lakefile.toml
+-rw-r--r--  1 runner runner    25 Nov  3 08:24 lean-toolchain
+-rw-r--r--  1 runner runner  5606 Nov  3 08:24 local-build.log
+-rw-r--r--  1 runner runner   400 Nov  3 08:24 local-verification.json
+--- find ---
+./.tool-logs/shell-7bf66523dda143779a4c8f30c0945f70.log
+./.tool-logs/shell-ae1599233c5a4b579612a8c4901ec423.log
+./Assignment4Verification.lean
+./AxiomAudit.lean
+./README.md
+./RefProbe.lean
+./Scratch.lean
+./axioms.log
+./build.log
+./check_local.py
+./final-axioms.log
+./final-build.log
+./lake-manifest.json
+./lakefile.toml
+./lean-toolchain
+./local-build.log
+./local-verification.json

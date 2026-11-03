@@ -1,99 +1,37 @@
-CombinedAudit.lean:13:18: error: expected token
-CombinedAudit.lean:14:18: error: expected token
-CombinedAudit.lean:15:29: error: expected token
-CombinedAudit.lean:16:31: error: expected token
-CombinedAudit.lean:18:34: error: expected token
-CombinedAudit.lean:24:34: error: expected token
-CombinedAudit.lean:30:40: error: expected token
-CombinedAudit.lean:36:40: error: expected token
-CombinedAudit.lean:42:30: error: expected token
-CombinedAudit.lean:44:30: error: expected token
-CombinedAudit.lean:46:33: error: expected token
-CombinedAudit.lean:49:49: error: expected token
-CombinedAudit.lean:51:52: error: expected token
-CombinedAudit.lean:56:47: error: expected token
-CombinedAudit.lean:60:18: error: expected token
-CombinedAudit.lean:61:28: error: expected token
-CombinedAudit.lean:67:32: error: expected token
-CombinedAudit.lean:69:22: error: Function expected at
-  wrap
-but this term has type
-  ?m.1
+⚠ [1963/1964] Built Assignment4Verification (2.0s)
+warning: Assignment4Verification.lean:22:2: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
-Note: Expected a function because this term is being applied to the argument
-  (-Real.pi)
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Assignment4Verification.lean:28:2: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
-Hint: The identifier `wrap` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.
-CombinedAudit.lean:71:18: error: Function expected at
-  wrap
-but this term has type
-  ?m.1
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Assignment4Verification.lean:34:2: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
-Note: Expected a function because this term is being applied to the argument
-  Real.pi
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Assignment4Verification.lean:40:2: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
-Hint: The identifier `wrap` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.
-CombinedAudit.lean:73:9: error: Tactic `unfold` failed: Local variable `wrap` has no definition
-CombinedAudit.lean:75:43: error: expected token
-CombinedAudit.lean:81:22: error: expected token
-CombinedAudit.lean:82:22: error: expected token
-CombinedAudit.lean:83:24: error: expected token
-CombinedAudit.lean:85:27: error: expected token
-CombinedAudit.lean:88:48: error: expected token
-CombinedAudit.lean:99:6: error: expected token
-CombinedAudit.lean:103:42: error: expected token
-CombinedAudit.lean:109:48: error: expected token
-CombinedAudit.lean:113:39: error: expected token
-CombinedAudit.lean:116:63: error: expected token
-CombinedAudit.lean:118:25: error: expected token
-CombinedAudit.lean:120:53: error: expected token
-CombinedAudit.lean:124:46: error: expected token
-CombinedAudit.lean:126:38: error: expected token
-CombinedAudit.lean:128:41: error: expected token
-CombinedAudit.lean:130:46: error: expected token
-CombinedAudit.lean:135:38: error: expected token
-CombinedAudit.lean:137:51: error: expected token
-CombinedAudit.lean:141:51: error: expected token
-CombinedAudit.lean:156:53: error: expected token
-CombinedAudit.lean:159:56: error: expected token
-CombinedAudit.lean:167:43: error: expected token
-CombinedAudit.lean:173:49: error: expected token
-CombinedAudit.lean:187:47: error: expected token
-CombinedAudit.lean:188:50: error: expected token
-CombinedAudit.lean:189:55: error: expected token
-CombinedAudit.lean:191:63: error: expected token
-CombinedAudit.lean:193:40: error: expected token
-'Assignment4.vBody_of_wl_wr' does not depend on any axioms
-'Assignment4.wBody_of_wl_wr' does not depend on any axioms
-'Assignment4.wl_compose' does not depend on any axioms
-'Assignment4.wr_compose' does not depend on any axioms
-'Assignment4.wl_scale' does not depend on any axioms
-'Assignment4.wr_scale' does not depend on any axioms
-'Assignment4.curvature_scale' does not depend on any axioms
-'Assignment4.front_clearance_identity' does not depend on any axioms
-'Assignment4.front_range_for_clearance' does not depend on any axioms
-'Assignment4.side_clearance_identity' does not depend on any axioms
-'Assignment4.wrap_range' does not depend on any axioms
-'Assignment4.wrap_abs_le_pi' does not depend on any axioms
-'Assignment4.wrap_neg_pi' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Assignment4.wrap_pi' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Assignment4.heading_command_bounded' does not depend on any axioms
-'Assignment4.rot_zero' does not depend on any axioms
-'Assignment4.rot_quarter' does not depend on any axioms
-'Assignment4.rot_preserves_squared_norm' does not depend on any axioms
-'Assignment4.protect_front_nonforward' does not depend on any axioms
-'Assignment4.protect_invalid' does not depend on any axioms
-'Assignment4.protect_unconfirmed_turn' does not depend on any axioms
-'Assignment4.every_state_front_nonforward' does not depend on any axioms
-'Assignment4.lostTimer_reset' does not depend on any axioms
-'Assignment4.lostTimer_advances' does not depend on any axioms
-'Assignment4.lostTimer_nondecreasing' does not depend on any axioms
-'Assignment4.limitDenom_positive' does not depend on any axioms
-'Assignment4.limited_wheel_bound' does not depend on any axioms
-'Assignment4.common_scale_preserves_nonforward' does not depend on any axioms
-'Assignment4.limitDenom_inside_bounds' does not depend on any axioms
-'Assignment4.vBody_div' does not depend on any axioms
-'Assignment4.final_limited_nonforward' does not depend on any axioms
-'Assignment4.equal_measured_increments_no_turn' does not depend on any axioms
-'Assignment4.opposite_measured_increments_no_translation' does not depend on any axioms
-'Assignment4.zero_measured_increments' does not depend on any axioms
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: Assignment4Verification.lean:74:24: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+warning: Assignment4Verification.lean:74:20: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: Assignment4Verification.lean:310:50: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [minReadings, minOpt, h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: Assignment4Verification.lean:344:28: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lostTimer, hdt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Build completed successfully (1964 jobs).

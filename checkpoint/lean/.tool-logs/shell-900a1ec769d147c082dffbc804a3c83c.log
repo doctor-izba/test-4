@@ -1,0 +1,13 @@
+ALTERNATIVES.md
+README.md
+baseline-cloud
+baseline_frozen
+reference_checks.m
+results
+simulate.py
+test_simulation.py
+--- grep ---
+simulation/simulate.py:84:def protect(v,omega,front,threshold=.12):
+simulation/simulate.py:87:def lost_timer(previous,detected,dt):
+simulation/test_simulation.py:25:    def test_front_gate_all_behavior_outputs_and_threshold(self):
+simulation/test_simulation.py:34:    def test_timer_detects_frozen_mutant_and_bounded_fallback(self):

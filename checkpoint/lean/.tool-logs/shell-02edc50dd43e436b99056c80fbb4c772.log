@@ -1,0 +1,13 @@
+BUILD_EXIT=0
+⚠ [1963/1964] Replayed Assignment4Verification
+warning: Assignment4Verification.lean:22:2: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Build completed successfully (1964 jobs).
+=== axiom audit ===
+AUDIT_EXIT=0
+67 axioms.log
+'Assignment4.vBody_of_wl_wr' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wBody_of_wl_wr' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wl_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wr_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wl_scale' depends on axioms: [propext, Classical.choice, Quot.sound]

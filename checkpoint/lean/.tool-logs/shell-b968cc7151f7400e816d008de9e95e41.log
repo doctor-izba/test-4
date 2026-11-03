@@ -1,0 +1,71 @@
+def ray_range(origin,angle,walls,maximum=3.):
+    ray=(math.cos(angle),math.sin(angle)); best=maximum; detected=False
+    for wall in walls:
+        for a,b in zip(wall,wall[1:]+wall[:1]):
+            edge=sub(b,a); denominator=cross(ray,edge)
+            if abs(denominator)<1e-12:
+                continue
+            delta=sub(a,origin); distance=cross(delta,edge)/denominator; t=cross(delta,ray)/denominator
+            if 0<=distance<=best and 0<=t<=1:
+                best,detected=distance,True
+    return best if detected else None
+
+def sensors(pose,walls):
+    return {
+        'front':ray_range(transform((HALF_LENGTH,0),pose),pose[2],walls),
+        'left_front':ray_range(transform((.16,HALF_WIDTH),pose),pose[2]+math.pi/2,walls),
+        'left_back':ray_range(transform((-.16,HALF_WIDTH),pose),pose[2]+math.pi/2,walls),
+    }
+
+def wheel_command(v,omega):
+    left,right=(v-AXLE*omega/2)/RADIUS,(v+AXLE*omega/2)/RADIUS
+    scale=max(1.,abs(left)/WHEEL_LIMIT,abs(right)/WHEEL_LIMIT)
+    return left/scale,right/scale
+
+def protect(v,omega,front,threshold=.12):
+    return (0. if front is not None and front<=threshold else v),omega
+
+def lost_timer(previous,detected,dt):
+    return 0. if detected else previous+dt
+
+def turn_space_clear(readings,margin=.02):
+    """Conservative stationary full-circle bound for these axis-aligned walls.
+
+    Valid only when both observed walls are perpendicular to current sensor rays.
+    A full swept-disc calculation from actual polygons is logged independently.
+    """
+    radius=math.hypot(HALF_LENGTH,HALF_WIDTH)
+    front=readings['front']; side=readings['left_front']
+    return (front is not None and side is not None and
+            front+HALF_LENGTH>=radius+margin and side+HALF_WIDTH>=radius+margin)
+
+def integrate(pose,left_delta,right_delta):
+    ds=RADIUS*(left_delta+right_delta)/2
+    dtheta=RADIUS*(right_delta-left_delta)/AXLE
+    middle=pose[2]+dtheta/2
+    return pose[0]+ds*math.cos(middle),pose[1]+ds*math.sin(middle),wrap(pose[2]+dtheta)
+
+class Policy:
+    """Pure feedback input: odometry, proximity, elapsed time. No truth pose."""
+    def __init__(self,test,speed):
+        self.test,self.speed=test,speed
+        self.state='rotate_to_goal' if test=='goal' else 'approach' if test=='approach' else 'follow_first'
+        self.hold=0.; self.lost=0.; self.turn_origin=None; self.second_origin=None
+        self.finished=False
+
+    def step(self,odom,readings,dt):
+        x,y,theta=odom; front=readings['front']; left=readings['left_front']; back=readings['left_back']
+        v=omega=0.
+        if self.test=='goal':
+            distance=math.hypot(.8-x,.5-y); target=math.atan2(.5-y,.8-x)
+            if self.state=='rotate_to_goal':
+                error=wrap(target-theta); omega=max(-.8,min(.8,2.4*error))
+                if abs(error)<.04: self.state='translate'
+            elif self.state=='translate':
+                error=wrap(target-theta); v=min(self.speed,.8*distance); omega=max(-.8,min(.8,2.*error))
+                if distance<=.04: self.state='final_heading'; v=0.
+            elif self.state=='final_heading':
+                omega=max(-.8,min(.8,-2.4*theta))
+                if abs(theta)<=math.radians(3): self.state='hold'; omega=0.
+            elif self.state=='hold':
+                if distance>.05 or abs(theta)>math.radians(5):
