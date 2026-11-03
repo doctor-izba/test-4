@@ -1,0 +1,10 @@
+.lake/
+__pycache__/
+*.pyc
+*.dpapi
+.env*
+*.key
+research/raw/
+output/raw/
+node_modules/
+lean/local-*

@@ -1,0 +1,36 @@
+import Assignment4Verification
+
+#print axioms Assignment4.vBody_of_wl_wr
+#print axioms Assignment4.wBody_of_wl_wr
+#print axioms Assignment4.wl_compose
+#print axioms Assignment4.wr_compose
+#print axioms Assignment4.wl_scale
+#print axioms Assignment4.wr_scale
+#print axioms Assignment4.curvature_scale
+#print axioms Assignment4.front_clearance_identity
+#print axioms Assignment4.front_range_for_clearance
+#print axioms Assignment4.side_clearance_identity
+#print axioms Assignment4.wrap_range
+#print axioms Assignment4.wrap_abs_le_pi
+#print axioms Assignment4.wrap_neg_pi
+#print axioms Assignment4.wrap_pi
+#print axioms Assignment4.heading_command_bounded
+#print axioms Assignment4.rot_zero
+#print axioms Assignment4.rot_quarter
+#print axioms Assignment4.rot_preserves_squared_norm
+#print axioms Assignment4.protect_front_nonforward
+#print axioms Assignment4.protect_invalid
+#print axioms Assignment4.protect_unconfirmed_turn
+#print axioms Assignment4.every_state_front_nonforward
+#print axioms Assignment4.lostTimer_reset
+#print axioms Assignment4.lostTimer_advances
+#print axioms Assignment4.lostTimer_nondecreasing
+#print axioms Assignment4.limitDenom_positive
+#print axioms Assignment4.limited_wheel_bound
+#print axioms Assignment4.common_scale_preserves_nonforward
+#print axioms Assignment4.limitDenom_inside_bounds
+#print axioms Assignment4.vBody_div
+#print axioms Assignment4.final_limited_nonforward
+#print axioms Assignment4.equal_measured_increments_no_turn
+#print axioms Assignment4.opposite_measured_increments_no_translation
+#print axioms Assignment4.zero_measured_increments

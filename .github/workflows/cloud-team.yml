@@ -1,0 +1,87 @@
+name: Cloud robotics team
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: cloud-team-single-budget
+  cancel-in-progress: false
+jobs:
+  team:
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 220
+    env:
+      ELAN_HOME: /home/runner/.elan
+      LEAN_NUM_THREADS: '2'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Install free numerical and sandbox tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends bubblewrap poppler-utils octave
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          python -m pip install --disable-pip-version-check -r requirements.txt
+      - name: Offline harness and simulation regression tests
+        run: |
+          python -m unittest discover -s harness -p 'test_*.py' -v
+          python -m unittest discover -s simulation -p 'test_*.py' -v
+          python simulation/simulate.py --output simulation/baseline-cloud
+          octave --no-gui --quiet simulation/reference_checks.m
+      - name: Install pinned Lean and prebuilt mathlib (no proof-success claim)
+        uses: leanprover/lean-action@fe408643ea7367d8c0404a8be3975bb145f5fb64
+        with:
+          lake-package-directory: lean
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'true'
+          use-github-cache: 'false'
+      - name: Check Linux sandbox before authorizing inference
+        run: |
+          mkdir -p review research reports output
+          python -c "import sys;sys.path.insert(0,'harness');from tools import Tools;r=Tools('.','review').shell('printf SANDBOX_OK');print(r);assert r.get('exit_code')==0 and 'SANDBOX_OK' in r['output']"
+      - name: Claim one-shot USD3.70 repository authorization
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python cloud/budget_claim.py
+      - name: DeepSeek research, proofs, simulations, independent review and writing
+        id: agents
+        env:
+          NUBE_API_KEY: ${{ secrets.NUBE_API_KEY }}
+        run: python harness/run.py --root . --budget 3.70 --minutes 170 --steps 40 --reasoning high
+      - name: Render authored report if produced
+        if: ${{ always() && steps.agents.outcome != 'skipped' }}
+        run: |
+          if test -f reports/report.md; then python cloud/render_report.py; else echo 'No authored report exists; see worker diagnostics.'; fi
+      - name: Record final proof build without hiding failures
+        if: ${{ always() && steps.agents.outcome != 'skipped' }}
+        continue-on-error: true
+        working-directory: lean
+        run: |
+          set -o pipefail
+          lake build 2>&1 | tee final-build.log
+          lake env lean AxiomAudit.lean 2>&1 | tee final-axioms.log
+      - name: Collect public evidence (no books, cache, keys or raw chats)
+        if: always()
+        run: python cloud/collect_evidence.py
+      - name: Upload run evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: robotics-evidence-${{ github.run_id }}
+          path: public-evidence/
+          retention-days: 3
+          if-no-files-found: warn
+      - name: Publish authored results on a separate branch
+        if: ${{ always() && steps.agents.outcome != 'skipped' }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python cloud/publish_results.py
