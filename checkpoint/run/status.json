@@ -7,31 +7,28 @@
     "rounds": 2
   },
   "coordinator": {
-    "time": "2026-11-03T11:11:47.113078+00:00",
+    "time": "2026-11-03T11:24:50.826690+00:00",
     "role": "coordinator",
-    "event": "cycle_started",
-    "cycle": 1,
-    "summary": "Research/proof/simulation slice, then independent review and report"
+    "event": "run_checkpointed",
+    "summary": "budget_or_auth_stopped"
   },
   "research": {
-    "time": "2026-11-03T11:14:14.204819+00:00",
+    "time": "2026-11-03T11:24:50.409900+00:00",
     "role": "research",
-    "event": "slice_yielded",
-    "rounds": 12,
-    "summary": "Durable checkpoint saved; continue in the next constructive cycle"
+    "event": "stopped",
+    "summary": "Run budget cannot cover another pessimistically reserved request"
   },
   "lean": {
-    "time": "2026-11-03T11:14:33.335604+00:00",
+    "time": "2026-11-03T11:24:50.824352+00:00",
     "role": "lean",
-    "event": "slice_yielded",
-    "rounds": 12,
-    "summary": "Durable checkpoint saved; continue in the next constructive cycle"
+    "event": "stopped",
+    "summary": "Run budget cannot cover another pessimistically reserved request"
   },
   "simulation": {
-    "time": "2026-11-03T11:17:25.155077+00:00",
+    "time": "2026-11-03T11:24:48.827396+00:00",
     "role": "simulation",
-    "event": "retry_paused",
-    "summary": "Transient retry allowance exhausted; all uncertain reservations retained"
+    "event": "stopped",
+    "summary": "Run budget cannot cover another pessimistically reserved request"
   },
   "reviewer": {
     "time": "2026-11-03T11:21:29.748604+00:00",
@@ -40,12 +37,9 @@
     "summary": "Transient retry allowance exhausted; all uncertain reservations retained"
   },
   "writer": {
-    "time": "2026-11-03T11:23:37.235011+00:00",
+    "time": "2026-11-03T11:24:29.012864+00:00",
     "role": "writer",
-    "event": "request_retry",
-    "call_id": "writer-b206e6ba9493",
-    "summary": "HTTP 522",
-    "reservation_retained": true,
-    "attempt": 5
+    "event": "retry_paused",
+    "summary": "Transient retry allowance exhausted; all uncertain reservations retained"
   }
 }

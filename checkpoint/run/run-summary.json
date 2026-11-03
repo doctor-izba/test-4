@@ -1,0 +1,43 @@
+{
+  "time": "2026-11-03T11:24:50.826337+00:00",
+  "version": 2,
+  "cycle": 2,
+  "model": "DeepSeek-V4.1-Flash",
+  "roles": {
+    "research": {
+      "state": "stopped",
+      "error_type": "BudgetStopped",
+      "message": "Run budget cannot cover another pessimistically reserved request",
+      "cycle": 2,
+      "session_turns": 12,
+      "session_tools": 34
+    },
+    "lean": {
+      "state": "stopped",
+      "error_type": "BudgetStopped",
+      "message": "Run budget cannot cover another pessimistically reserved request",
+      "cycle": 2,
+      "session_turns": 12,
+      "session_tools": 21
+    },
+    "simulation": {
+      "state": "stopped",
+      "error_type": "BudgetStopped",
+      "message": "Run budget cannot cover another pessimistically reserved request",
+      "cycle": 2,
+      "session_turns": 6,
+      "session_tools": 10
+    },
+    "reviewer": {
+      "state": "skipped",
+      "reason": "Global deadline/budget/auth stop"
+    },
+    "writer": {
+      "state": "skipped",
+      "reason": "Global deadline/budget/auth stop"
+    }
+  },
+  "state": "budget_or_auth_stopped",
+  "stop_reason": "Run budget cannot cover another pessimistically reserved request",
+  "note": "Saved artifacts remain reviewable; no unsupported claim that the assignment is complete."
+}

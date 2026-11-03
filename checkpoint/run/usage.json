@@ -1,7 +1,7 @@
 {
   "limit_usd": "3.23",
   "confirmed_usd": "0.0813070602",
-  "reserved_usd": "2.801435760",
+  "reserved_usd": "3.148692750",
   "reservations": {
     "preflight-0ab1d3ba6f77": "0.001381725",
     "preflight-8894fc749c34": "0.00138186",
@@ -32,7 +32,10 @@
     "writer-014ad5cf0bcc": "0.038602035",
     "writer-de175b6b5e02": "0.038602035",
     "writer-333cfcc4a872": "0.038602035",
-    "writer-b206e6ba9493": "0.038602035"
+    "writer-b206e6ba9493": "0.038602035",
+    "writer-631d43f25f4d": "0.038602035",
+    "research-e13f22509619": "0.24094557",
+    "lean-1cbcad499b48": "0.067709385"
   },
   "reservation_states": {
     "preflight-0ab1d3ba6f77": "uncertain",
@@ -64,9 +67,12 @@
     "writer-014ad5cf0bcc": "uncertain",
     "writer-de175b6b5e02": "uncertain",
     "writer-333cfcc4a872": "uncertain",
-    "writer-b206e6ba9493": "uncertain"
+    "writer-b206e6ba9493": "uncertain",
+    "writer-631d43f25f4d": "uncertain",
+    "research-e13f22509619": "uncertain",
+    "lean-1cbcad499b48": "uncertain"
   },
-  "stop_reason": null,
+  "stop_reason": "Run budget cannot cover another pessimistically reserved request",
   "calls": [
     {
       "id": "preflight-0ab1d3ba6f77",
@@ -474,6 +480,21 @@
     },
     {
       "id": "writer-b206e6ba9493",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "writer-631d43f25f4d",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "research-e13f22509619",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "lean-1cbcad499b48",
       "state": "uncertain",
       "cause": "HTTP 522"
     }
