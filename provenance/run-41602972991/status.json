@@ -1,0 +1,35 @@
+{
+  "preflight": {
+    "time": "2026-11-03T08:26:28.147472+00:00",
+    "role": "preflight",
+    "event": "turn_finished",
+    "summary": "PREFLIGHT_OK",
+    "rounds": 2
+  },
+  "coordinator": {
+    "time": "2026-11-03T08:30:26.028575+00:00",
+    "role": "coordinator",
+    "event": "run_checkpointed",
+    "summary": "budget_or_auth_stopped"
+  },
+  "research": {
+    "time": "2026-11-03T08:30:26.026667+00:00",
+    "role": "research",
+    "event": "slice_yielded",
+    "rounds": 12,
+    "summary": "Durable checkpoint saved; continue in the next constructive cycle"
+  },
+  "lean": {
+    "time": "2026-11-03T08:27:51.065649+00:00",
+    "role": "lean",
+    "event": "slice_yielded",
+    "rounds": 12,
+    "summary": "Durable checkpoint saved; continue in the next constructive cycle"
+  },
+  "simulation": {
+    "time": "2026-11-03T08:30:20.308607+00:00",
+    "role": "simulation",
+    "event": "stopped",
+    "summary": "Provider refused request: HTTP 524"
+  }
+}

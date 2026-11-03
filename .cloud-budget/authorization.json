@@ -1,12 +1,23 @@
 {
   "schema": 2,
-  "state": "claimed_before_inference",
-  "authorization_id": "resume-six-hour-team-2026-11-03",
-  "maximum_usd": "3.52",
-  "prior_confirmed_usd": "0.1700837460",
-  "prior_reserved_usd": "0",
-  "previous_run_id": "41598425296",
+  "state": "authorized",
+  "authorization_id": "resume-streaming-six-hour-team-2026-11-03",
+  "maximum_usd": "3.23",
+  "previous_run_id": "41602972991",
+  "prior_confirmed_usd": "0.2282926788",
+  "prior_reserved_usd": "0.22862466",
   "lifetime_target_usd": "3.70",
-  "note": "User explicitly requested continuation for the six-hour GitHub job window. Prior expense retained; unused renewed authorization is claimed atomically. Local probes remain below the USD0.30 margin to the USD4 ceiling.",
-  "run_id": "41602972991"
+  "history": [
+    {
+      "run_id": "41598425296",
+      "confirmed_usd": "0.1700837460",
+      "reserved_usd": "0"
+    },
+    {
+      "run_id": "41602972991",
+      "confirmed_usd": "0.0582089328",
+      "reserved_usd": "0.22862466"
+    }
+  ],
+  "note": "User requested immediate continuation after transient524. Prior uncertain reservation remains fully counted; no blind write-off."
 }

@@ -1,68 +1,96 @@
-# DeepSeek cloud team harness
+# Durable DeepSeek cloud team
 
-This is a small auditable Python harness for the explicitly authorized Nube run,
-not Pi. It implements the requested multi-agent workflow directly rather than
-pretending Pi core has a built-in team scheduler. It uses only Python's standard
-library. No model/provider substitution is allowed.
-
-Run on Linux with bubblewrap, a preinstalled pinned Lean toolchain/mathlib cache,
-and the dependencies required by the simulation task:
+This is an auditable Python-standard-library harness, not Pi. Research, Lean and
+simulation workers take parallel cooperative slices; reviewer and writer then
+inspect real artifacts. New cycles repair findings and develop meaningful extra
+checks. A worker saying `finished` does not end the team or certify the assignment.
 
 ```
-python3 harness/run.py --root . --budget 3.70 --minutes 100 --steps 35 --reasoning high
+python3 harness/run.py --root . --budget 3.23 --deadline-utc "$DEADLINE_UTC" \
+  --steps 0 --slice-rounds 12 --max-output-tokens 393216 \
+  --context-tokens 1048576 --reasoning max --retries 5 --work-until-deadline
 ```
 
-Supply `NUBE_API_KEY` through a GitHub Actions secret. Never pass it on the command
-line or write it to the repository. The parent workflow must enforce a one-shot
-repository-wide spending claim: this harness's ledger controls one run, not all
-possible future workflow dispatches. Reruns require reconciliation/authorization.
+The parent workflow sets an absolute deadline from actual job start, reserving
+time for final evidence saving within GitHub's six-hour job limit. The budget
+argument is the authorization for this run, after accounting for prior usage and
+uncertain requests. It must not be copied blindly to a new paid run.
 
-1. Before spending, test the Linux bubblewrap sandbox.
-2. Preflight two-turn tool calling with actual API usage and reasoning history.
-3. Research, Lean and simulation workers run in parallel with separate writable
-   directories; reviewer then writer run against their completed artifacts.
-4. Save sanitized provider requests, tool results, per-role status and a usage
-   ledger under `output/`. GitHub logs show concise live events.
+Supply `NUBE_API_KEY` as a GitHub Actions secret, never a command argument. The
+parent supervisor supplies no GitHub/Telegram credentials to the worker. Worker
+shells use bubblewrap: read-only OS/repository, role-owned writable subtree, private
+PID and temporary namespaces, no network and a minimal environment. Public HTTPS
+research downloads use a redirect-checked broker which rejects private addresses.
 
-Prompts are read from `tasks/PROJECT_BRIEF.md` and `tasks/<role>.md`. Roles own
-`research/`, `lean/`, `simulation/`, `review/` and `reports/`, respectively. All
-shell tools have read-only OS/repository views, a role-owned writable subtree,
-private `/tmp` and PID namespace, and no network. `fetch_url` is a broker for
-public unauthenticated HTTPS files, validates redirect destinations and rejects
-private network addresses. Installed Lean/toolchains are available read-only;
-workers cannot install dependencies over the shell network. Download source
-files through `fetch_url`, then use installed PDF/text tools in the sandbox.
+## Persistence and continuity
 
-## Budget accounting
+Prompts: `tasks/PROJECT_BRIEF.md` and each `tasks/<role>.md`. Owned directories:
+`research/`, `lean/`, `simulation/`, `review/`, `reports/`.
 
-Prices are the user's stated Nube tariffs, not an independent provider billing
-attestation: uncached input $0.135/M, cache-hit input $0.0027/M, all output
-including reasoning $0.540/M. Before dispatch, reserve uncached input at one
-token per serialized request byte plus 4096 framing tokens, and full declared
-maximum output. Reservations and confirmed costs share a locked $3.70 ceiling.
-Usage is settled from actual counters. Missing/invalid usage, transport failures
-or an interrupted in-flight request retain reservations and halt further calls.
-No automatic API retry is made. Prices/tax/provider billing changes are outside
-what a local token ledger can guarantee; the $0.30 margin is not a billing API.
+Complete sanitized conversations and provider responses remain under `output/`.
+`output/sessions/` checkpoints every response/tool boundary and keeps a full
+journal. An interrupted running tool has an unknown outcome and is never blindly
+replayed. Completed tool results and archived responses can be recovered without
+executing tools or settling the same cost twice. A `output/STOP` file or SIGTERM
+stops starting new work; already checkpointed uncertainty remains explicit.
 
-`reasoning_effort: high` is requested and the provider's `reasoning_content` is
-preserved across tool turns. A successful response does not independently prove
-that the provider honored high effort; requested and observed fields are saved.
+There is no 40-step, 170-minute, 8K-output or 200KB-request ceiling. Twelve-turn
+slices yield durable state, rather than failing the worker. Context is compacted
+before the joint model input/output capacity using factual handoffs and persisted
+files; oversized old response blocks are removed from active context while the
+complete journal remains. Shell defaults to 900 seconds and can be given a longer
+timeout up to the remaining job deadline. Stdout goes directly to owned log files;
+only a tail enters model context.
 
-`output/usage.json` contains `confirmed_usd`, `reserved_usd`, `reservations`,
-`stop_reason` and per-call counters. These describe tokens/cost, not correctness.
-`finished` means an agent stopped normally; independent theorem/experiment
-acceptance still requires compiler/checker outputs and reviewer evidence.
+## Streaming and retries
 
-## Offline verification
+The cheap preflight first tries SSE with `stream_options.include_usage=true`. If
+the provider rejects SSE with HTTP 502/400, transport switches to compatible JSON
+for the rest of the run, and this decision persists across worker restarts.
+Actual Nube probes observed SSE failures while JSON worked; SSE support must not
+be presented as verified. The SSE parser
+reconstructs fragmented content, reasoning, indexed function names/arguments and
+final usage chunks, including empty `choices` usage chunks. Stream progress is
+reported periodically without dumping reasoning into console logs.
+
+All HTTP 5xx (including Cloudflare 520–527), 408, 409, 425, 429 and transport
+interruptions retry with capped exponential backoff. A retry batch exhausting its
+allowance pauses that role for the next coordinator cycle, rather than globally
+ending the run. 401/402/403 and other definitive failures halt paid requests.
+Interrupted SSE/malformed partial data is a transport failure. An explicitly
+completed response lacking valid final usage halts accounting conservatively.
+
+Ordinary requests use the configured 393216 output ceiling and requested `max`
+reasoning effort. Only reconnection retries temporarily lower their output ceiling
+to 65536 so repeated uncertain connections do not each reserve another full 384K
+output. JSON retries also request `high` instead of `max` effort. These are not
+permanent restrictions of successful ordinary requests.
+An API accepting a field does not independently attest how much effort it used.
+
+## Cost accounting
+
+User-supplied tariffs: uncached input $0.135/M, cached input $0.0027/M, output
+including reasoning $0.540/M. Before each attempt a locked ledger reserves one
+uncached input token per serialized request byte plus framing allowance, and the
+entire declared output ceiling. Remaining money and joint context can reduce a
+request's maximum output. Actual reported usage settles successful responses.
+
+Failed/unknown requests retain pessimistic reservations across retries/restarts.
+They do not silently disappear or get counted as free. Missing/invalid final usage
+halts further calls. `output/usage.json` records `confirmed_usd`, `reserved_usd`,
+reservation states, per-call counters and any stop reason. Provider pricing/tax
+changes are outside a token ledger; the parent must enforce authorization across
+all separate runs as well as this run's ledger.
+
+## Offline tests
 
 ```
 python3 -m unittest discover -s harness -p 'test_*.py' -v
 ```
 
-Tests cover concurrent reservations, unknown usage, interrupted-run fail-closed,
-cache/output arithmetic, path ownership, environment stripping, sandbox refusal,
-private-address fetch refusal, multi-turn reasoning preservation, failed-call
-reservations and log secret redaction. They spend no API tokens. Actual Linux
-sandbox isolation and actual Nube compatibility are checked in the cloud job
-before the workers are dispatched.
+Tests spend no API tokens. They cover concurrent reservations, unknown usage,
+restart uncertainty, cache arithmetic, path ownership, environment isolation,
+required sandbox, private-address refusal, tool-loop reasoning preservation,
+secret redaction, 401 fatal handling, 429/500/524 recovery, retry ceilings,
+fragmented SSE multi-tools/reasoning/final usage, large contexts, length
+continuation, unknown-tool non-replay, repair cycles and non-livelocking compaction.

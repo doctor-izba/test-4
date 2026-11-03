@@ -19,6 +19,7 @@ import uuid
 from budget import Budget, BudgetStopped
 from tools import Tools, SCHEMAS
 from sessions import Session, atomic_json
+from sse import parse_sse
 
 MODEL = "DeepSeek-V4.1-Flash"
 ROLES = {"research": "research", "lean": "lean", "simulation": "simulation", "reviewer": "review", "writer": "reports"}
@@ -106,6 +107,13 @@ class Client:
         self.retries, self.retry_base, self.sleep = max(0, int(retries)), max(0, float(retry_base)), sleep
         self.transport = transport or self.request
         self.local = threading.local()
+        self.transport_state_path = self.output / "provider-transport.json"
+        try:
+            self.streaming_enabled = json.loads(self.transport_state_path.read_text()).get("streaming_enabled", True)
+        except (OSError, ValueError):
+            self.streaming_enabled = True
+        if os.environ.get('NUBE_TRANSPORT', '').lower() == 'json':
+            self.streaming_enabled = False
         self.reconcile_archives()
 
     def remaining(self):
@@ -118,11 +126,23 @@ class Client:
         return remaining
 
     def request(self, payload):
+        streaming = json.loads(payload).get("stream", False)
         request = urllib.request.Request("https://ai.nube-api.com/v1/chat/completions", data=payload,
-            headers={"Authorization": "Bearer " + self.secret, "Content-Type": "application/json", "Accept": "application/json", "User-Agent": "Mozilla/5.0"})
+            headers={"Authorization": "Bearer " + self.secret, "Content-Type": "application/json", "Accept": "text/event-stream" if streaming else "application/json", "User-Agent": "Mozilla/5.0"})
         # Long reasoning is allowed to use the remaining authorized job time.
         with urllib.request.urlopen(request, timeout=self.remaining()) as response:
-            return json.load(response)
+            if not streaming or "application/json" in response.headers.get("Content-Type", "").lower():
+                return json.load(response)  # Compatible provider ignored streaming.
+            last_notice = time.monotonic()
+            def progress(chunks):
+                nonlocal last_notice
+                self.remaining()
+                now = time.monotonic()
+                if now - last_notice >= 20:
+                    self.events.emit(getattr(self.local, "request_role", "provider"), "stream_progress",
+                                     summary=f"Receiving model stream ({chunks} data chunks); final usage pending")
+                    last_notice = now
+            return parse_sse(response, progress)
 
     def reconcile_archives(self):
         for call_id in list(self.budget.reservations):
@@ -161,9 +181,17 @@ class Client:
         desired = min(desired, self.max_output_tokens)
         for attempt in range(self.retries + 1):
             self.remaining()
-            payload = {"model": MODEL, "messages": messages, "tools": SCHEMAS, "max_tokens": desired, "stream": False}
+            # A failed connection may still have consumed tokens. Retain its
+            # worst-case reservation, and use a smaller *retry-only* ceiling to
+            # avoid reserving another 384K output on every network retry. The next
+            # ordinary successful request again uses the full configured model cap.
+            attempt_output = desired if attempt == 0 else min(desired, 65536)
+            payload = {"model": MODEL, "messages": messages, "tools": SCHEMAS, "max_tokens": attempt_output,
+                       "stream": self.streaming_enabled}
+            if payload["stream"]:
+                payload["stream_options"] = {"include_usage": True}
             if self.thinking != "off":
-                payload["reasoning_effort"] = self.thinking
+                payload["reasoning_effort"] = "high" if attempt > 0 and not payload["stream"] and self.thinking == "max" else self.thinking
             if tool_choice:
                 payload["tool_choice"] = tool_choice
             initial_bytes = len(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
@@ -180,7 +208,7 @@ class Client:
                         raise BudgetStopped(self.budget.reason)
                     available = self.budget.available()
                     money_output = int((available * Decimal(1_000_000) - Decimal(input_bound) * Decimal(".135")) / Decimal(".540"))
-                    allowed = min(desired, output_room, money_output)
+                    allowed = min(attempt_output, output_room, money_output)
                     if allowed >= 1:
                         payload["max_tokens"] = allowed
                         encoded = json.dumps(payload, ensure_ascii=False).encode("utf-8")
@@ -201,16 +229,26 @@ class Client:
             self.events.emit(role, "request", call_id=call_id, attempt=attempt + 1,
                 request_bytes=len(encoded), input_bound=input_bound, max_output_tokens=allowed, requested_reasoning=self.thinking)
             try:
+                self.local.request_role = role
                 data = self.transport(encoded)
             except Exception as error:
                 code = error.code if isinstance(error, urllib.error.HTTPError) else None
-                transient = (code in {429, 500, 502, 503, 504}) if code is not None else isinstance(error, (urllib.error.URLError, TimeoutError, ConnectionError))
+                transient = (code in {408, 409, 425, 429} or 500 <= code <= 599) if code is not None else isinstance(error, (urllib.error.URLError, TimeoutError, ConnectionError))
+                if payload["stream"] and code in {400, 502}:
+                    # Actual Nube probes can reject SSE while JSON works. Once
+                    # observed, use JSON for this client for the remainder of the
+                    # run, rather than repeatedly spending on known-broken SSE.
+                    self.streaming_enabled = False
+                    atomic_json(self.transport_state_path, {"streaming_enabled": False, "time": timestamp(),
+                        "reason": f"SSE HTTP {code}; compatible JSON fallback persists across worker restarts"})
+                    transient = True
+                    self.events.emit(role, "transport_fallback", summary=f"SSE HTTP {code}; switching subsequent attempts and requests to JSON")
                 cause = f"HTTP {code}" if code is not None else type(error).__name__
                 if isinstance(error, urllib.error.HTTPError):
                     error.close()
                 self.budget.uncertain(call_id, cause, halt=not transient)
                 atomic_json(self.output / (call_id + ".json"), {"call_id": call_id, "state": "uncertain", "cause": cause,
-                    "input_bound": input_bound, "max_output_tokens": allowed}, self.events.redact)
+                    "input_bound": input_bound, "max_output_tokens": allowed, "request": payload}, self.events.redact)
                 if session:
                     session.data["pending_request"] = None
                     session.flush()

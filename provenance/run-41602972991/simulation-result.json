@@ -1,0 +1,8 @@
+{
+  "state": "stopped",
+  "error_type": "BudgetStopped",
+  "message": "Provider refused request: HTTP 524",
+  "cycle": 1,
+  "session_turns": 5,
+  "session_tools": 10
+}

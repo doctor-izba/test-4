@@ -15,6 +15,8 @@ from tools import Tools, clean_environment, safe_public_url
 from run import Client, Events, MODEL, run_loop, RetryExhausted, coordinate, parse_deadline, compact_if_needed
 from sessions import Session
 import urllib.error
+import io
+from sse import parse_sse
 
 
 class BudgetTests(unittest.TestCase):
@@ -181,6 +183,69 @@ class AgentTests(unittest.TestCase):
             client.chat("fatal", [{"role": "user", "content": "test"}])
         self.assertEqual(len(calls), 1)
         self.assertTrue(self.budget.reason)
+
+    def test_524_is_transient_then_streaming_success(self):
+        requests = []
+        def transport(encoded):
+            requests.append(json.loads(encoded))
+            if len(requests) == 1:
+                raise urllib.error.HTTPError("https://example.test", 524, "fixture", {}, None)
+            return self.fixture_response()
+        client = Client(self.secret, self.budget, self.output, self.events, time.monotonic() + 60,
+            transport=transport, retry_base=0, sleep=lambda delay: None)
+        client.chat("cloudflare", [{"role": "user", "content": "test"}])
+        self.assertEqual(len(requests), 2)
+        self.assertIsNone(self.budget.reason)
+        self.assertEqual(len(self.budget.reservations), 1)
+        self.assertTrue(requests[0]["stream"])
+        self.assertTrue(requests[0]["stream_options"]["include_usage"])
+        self.assertEqual(requests[0]["max_tokens"], 393216)
+        self.assertEqual(requests[1]["max_tokens"], 65536)
+
+    def test_sse_fragments_reasoning_multiple_tools_and_final_usage(self):
+        chunks = [
+            {"model": MODEL, "choices": [{"index": 0, "delta": {"role": "assistant", "reasoning_content": "check "}}]},
+            {"choices": [{"index": 0, "delta": {"reasoning_content": "both", "tool_calls": [
+                {"index": 0, "id": "call_a", "type": "function", "function": {"name": "read_", "arguments": '{"path":'}},
+                {"index": 1, "id": "call_b", "function": {"name": "write_file", "arguments": '{"path":"lean/x",'}}]}}]},
+            {"choices": [{"index": 0, "delta": {"tool_calls": [
+                {"index": 1, "function": {"arguments": '"content":"ok"}'}},
+                {"index": 0, "function": {"name": "file", "arguments": '"README.md"}'}}]}, "finish_reason": "tool_calls"}]},
+            {"choices": [], "usage": {"prompt_tokens": 20, "completion_tokens": 30,
+                "completion_tokens_details": {"reasoning_tokens": 10}}},
+        ]
+        raw = ": keepalive\n\n" + "".join("data: " + json.dumps(chunk) + "\n\n" for chunk in chunks) + "data: [DONE]\n\n"
+        response = parse_sse(io.BytesIO(raw.encode()))
+        message = response["choices"][0]["message"]
+        self.assertEqual(message["reasoning_content"], "check both")
+        self.assertEqual(message["tool_calls"][0]["function"]["name"], "read_file")
+        self.assertEqual(json.loads(message["tool_calls"][0]["function"]["arguments"]), {"path": "README.md"})
+        self.assertEqual(json.loads(message["tool_calls"][1]["function"]["arguments"]), {"path": "lean/x", "content": "ok"})
+        self.assertEqual(response["usage"]["completion_tokens"], 30)
+
+    def test_sse_502_sticky_json_fallback_preserves_actual_payload(self):
+        requests = []
+        def transport(encoded):
+            requests.append(json.loads(encoded))
+            if len(requests) == 1:
+                raise urllib.error.HTTPError("https://example.test", 502, "fixture", {}, None)
+            return self.fixture_response()
+        client = Client(self.secret, self.budget, self.output, self.events, time.monotonic() + 60,
+            transport=transport, retry_base=0, sleep=lambda delay: None)
+        client.chat("fallback", [{"role": "user", "content": "test"}], max_tokens=1024)
+        client.chat("ordinary", [{"role": "user", "content": "test"}])
+        self.assertTrue(requests[0]["stream"])
+        self.assertFalse(requests[1]["stream"])
+        self.assertNotIn("stream_options", requests[1])
+        self.assertEqual(requests[1]["reasoning_effort"], "high")
+        self.assertFalse(requests[2]["stream"])
+        self.assertEqual(requests[2]["max_tokens"], 393216)
+        self.assertEqual(requests[2]["reasoning_effort"], "max")
+        restored = Client(self.secret, self.budget, self.output, self.events, time.monotonic() + 60,
+            transport=transport, retry_base=0)
+        self.assertFalse(restored.streaming_enabled)
+        self.assertIsNone(self.budget.reason)
+        self.assertEqual(len(self.budget.reservations), 1)
 
     def test_missing_usage_is_fatal(self):
         response = self.fixture_response()
