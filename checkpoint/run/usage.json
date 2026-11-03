@@ -1,7 +1,7 @@
 {
   "limit_usd": "3.23",
-  "confirmed_usd": "0.0790928550",
-  "reserved_usd": "2.201643045",
+  "confirmed_usd": "0.0813070602",
+  "reserved_usd": "2.385959625",
   "reservations": {
     "preflight-0ab1d3ba6f77": "0.001381725",
     "preflight-8894fc749c34": "0.00138186",
@@ -22,7 +22,11 @@
     "simulation-6dc302c371e3": "0.053567055",
     "simulation-de7fb015c0a3": "0.053567055",
     "reviewer-32a81c92f553": "0.215507385",
-    "reviewer-e204619c61b6": "0.22022442"
+    "reviewer-4b96f0dd9841": "0.22246596",
+    "reviewer-a4ac35d8002c": "0.04551876",
+    "reviewer-05e830c7b035": "0.04551876",
+    "reviewer-e3689f70f1ab": "0.04551876",
+    "reviewer-01d811ecd2cb": "0.04551876"
   },
   "reservation_states": {
     "preflight-0ab1d3ba6f77": "uncertain",
@@ -44,7 +48,11 @@
     "simulation-6dc302c371e3": "uncertain",
     "simulation-de7fb015c0a3": "uncertain",
     "reviewer-32a81c92f553": "uncertain",
-    "reviewer-e204619c61b6": "active"
+    "reviewer-4b96f0dd9841": "uncertain",
+    "reviewer-a4ac35d8002c": "uncertain",
+    "reviewer-05e830c7b035": "uncertain",
+    "reviewer-e3689f70f1ab": "uncertain",
+    "reviewer-01d811ecd2cb": "active"
   },
   "stop_reason": null,
   "calls": [
@@ -394,6 +402,33 @@
       "completion_tokens": 382,
       "cached_tokens": 0,
       "usd": "0.00182898"
+    },
+    {
+      "id": "reviewer-e204619c61b6",
+      "prompt_tokens": 14698,
+      "completion_tokens": 3311,
+      "cached_tokens": 11776,
+      "usd": "0.0022142052"
+    },
+    {
+      "id": "reviewer-4b96f0dd9841",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-a4ac35d8002c",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-05e830c7b035",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-e3689f70f1ab",
+      "state": "uncertain",
+      "cause": "HTTP 502"
     }
   ],
   "rates_usd_per_million": {

@@ -34,14 +34,14 @@
     "summary": "Transient retry allowance exhausted; all uncertain reservations retained"
   },
   "reviewer": {
-    "time": "2026-11-03T11:18:15.218795+00:00",
+    "time": "2026-11-03T11:19:59.499650+00:00",
     "role": "reviewer",
     "event": "request",
-    "call_id": "reviewer-e204619c61b6",
-    "attempt": 1,
-    "request_bytes": 54332,
-    "input_bound": 58428,
-    "max_output_tokens": 393216,
+    "call_id": "reviewer-01d811ecd2cb",
+    "attempt": 5,
+    "request_bytes": 70936,
+    "input_bound": 75032,
+    "max_output_tokens": 65536,
     "requested_reasoning": "max"
   }
 }
