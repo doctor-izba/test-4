@@ -1,7 +1,7 @@
 {
   "limit_usd": "3.23",
   "confirmed_usd": "0.0813070602",
-  "reserved_usd": "2.385959625",
+  "reserved_usd": "2.685629655",
   "reservations": {
     "preflight-0ab1d3ba6f77": "0.001381725",
     "preflight-8894fc749c34": "0.00138186",
@@ -26,7 +26,10 @@
     "reviewer-a4ac35d8002c": "0.04551876",
     "reviewer-05e830c7b035": "0.04551876",
     "reviewer-e3689f70f1ab": "0.04551876",
-    "reviewer-01d811ecd2cb": "0.04551876"
+    "reviewer-01d811ecd2cb": "0.04551876",
+    "reviewer-e9aba114da54": "0.04551876",
+    "writer-8da23fd9c30f": "0.215549235",
+    "writer-014ad5cf0bcc": "0.038602035"
   },
   "reservation_states": {
     "preflight-0ab1d3ba6f77": "uncertain",
@@ -52,7 +55,10 @@
     "reviewer-a4ac35d8002c": "uncertain",
     "reviewer-05e830c7b035": "uncertain",
     "reviewer-e3689f70f1ab": "uncertain",
-    "reviewer-01d811ecd2cb": "active"
+    "reviewer-01d811ecd2cb": "uncertain",
+    "reviewer-e9aba114da54": "uncertain",
+    "writer-8da23fd9c30f": "uncertain",
+    "writer-014ad5cf0bcc": "active"
   },
   "stop_reason": null,
   "calls": [
@@ -429,6 +435,21 @@
       "id": "reviewer-e3689f70f1ab",
       "state": "uncertain",
       "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-01d811ecd2cb",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-e9aba114da54",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "writer-8da23fd9c30f",
+      "state": "uncertain",
+      "cause": "HTTP 522"
     }
   ],
   "rates_usd_per_million": {
