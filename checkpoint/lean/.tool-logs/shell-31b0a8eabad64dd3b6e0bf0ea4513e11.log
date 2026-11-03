@@ -1,0 +1,62 @@
+12:def wrap(theta):
+15:def transform(point, pose):
+19:def footprint(pose):
+22:def cross(a,b):
+25:def sub(a,b):
+28:def point_segment(p,a,b):
+33:def intersects(a,b,c,d):
+41:def contains(point,polygon):
+45:def polygon_distance(left,right):
+57:def rectangle(x0,y0,x1,y1):
+60:def ray_range(origin,angle,walls,maximum=3.):
+72:def sensors(pose,walls):
+74:        'front':ray_range(transform((HALF_LENGTH,0),pose),pose[2],walls),
+75:        'left_front':ray_range(transform((.16,HALF_WIDTH),pose),pose[2]+math.pi/2,walls),
+79:def wheel_command(v,omega):
+84:def protect(v,omega,front,threshold=.12):
+85:    return (0. if front is not None and front<=threshold else v),omega
+87:def lost_timer(previous,detected,dt):
+90:def turn_space_clear(readings,margin=.02):
+97:    front=readings['front']; side=readings['left_front']
+98:    return (front is not None and side is not None and
+99:            front+HALF_LENGTH>=radius+margin and side+HALF_WIDTH>=radius+margin)
+101:def integrate(pose,left_delta,right_delta):
+105:    return pose[0]+ds*math.cos(middle),pose[1]+ds*math.sin(middle),wrap(pose[2]+dtheta)
+108:    """Pure feedback input: odometry, proximity, elapsed time. No truth pose."""
+109:    def __init__(self,test,speed):
+112:        self.hold=0.; self.lost=0.; self.turn_origin=None; self.second_origin=None
+115:    def step(self,odom,readings,dt):
+116:        x,y,theta=odom; front=readings['front']; left=readings['left_front']; back=readings['left_back']
+121:                error=wrap(target-theta); omega=max(-.8,min(.8,2.4*error))
+124:                error=wrap(target-theta); v=min(self.speed,.8*distance); omega=max(-.8,min(.8,2.*error))
+136:                self.lost=lost_timer(self.lost,front is not None,dt)
+137:                if front is None:
+139:                    if self.lost>=.5: self.state='sensor_failure'
+140:                elif front<=.202:
+143:                    v=min(self.speed,max(.005,.7*(front-.20)))
+148:                error=wrap(self.turn_origin-math.pi/2-theta)
+151:                    self.state='follow_second'; self.second_origin=odom[:2]; omega=0.
+153:                self.lost=lost_timer(self.lost,left is not None and back is not None,dt)
+154:                if self.state=='follow_first' and front is not None and front<.65:
+159:                elif self.lost>=.5:
+162:                    v=self.speed if self.lost==0 else .03
+170:        # Final protection applies AFTER every behavior, never before overwrite.
+171:        return protect(v,omega,front)
+173:def run_case(name,test,speed,destination,slip=0.):
+176:    odom=pose; policy=Policy(test,speed); rows=[]; left_angle=right_angle=0.
+180:        v,omega=policy.step(odom,readings,DT); wl,wr=wheel_command(v,omega)
+183:        if policy.state=='corner_turn' and not first_progress: first_progress=odom[0]
+184:        if policy.state=='follow_second' and second_start is None: second_start=odom[:2]
+187:                     'x_odom_m':odom[0],'y_odom_m':odom[1],'theta_odom_rad':odom[2],
+191:                     'front_range_m':readings['front'],'left_front_range_m':readings['left_front'],
+196:        # a slip factor; encoder odometry continues to use measured wheel rotation.
+198:        odom=integrate(odom,*increments)
+208:            'final_clearance_m':rows[-1]['footprint_clearance_m'],'final_estimated_pose':odom,'final_actual_pose':pose,
+209:            'odometry_error':[odom[0]-pose[0],odom[1]-pose[1],wrap(odom[2]-pose[2])],
+212:        result.update(estimated_goal_position_error_m=math.hypot(odom[0]-.8,odom[1]-.5),estimated_goal_heading_error_deg=math.degrees(abs(wrap(odom[2]))))
+214:        second_progress=math.hypot(odom[0]-second_start[0],odom[1]-second_start[1]) if second_start else 0.
+219:                      second_wall_parallel_progress_m=second_start[1]-odom[1] if second_start else 0.,
+224:def write_trajectory_svg(path,name,rows,walls):
+234:            '<text x="35" y="52" font-family="sans-serif" font-size="13">Blue: truth. Red dashed: encoder odometry. Wall polygons: grey.</text>']
+236:    for xkey,ykey,color,dash in [('x_gt_m','y_gt_m','#2563eb',''),('x_odom_m','y_odom_m','#dc2626',' stroke-dasharray="4 3"')]:
+242:def main():

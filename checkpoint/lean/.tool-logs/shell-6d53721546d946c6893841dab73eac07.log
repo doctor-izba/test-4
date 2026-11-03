@@ -1,0 +1,30 @@
+review:
+total 24
+drwxr-xr-x  6 runner runner 4096 Nov  3 11:11 .
+drwxr-xr-x 15 runner runner 4096 Nov  3 11:11 ..
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:11 .home
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:11 .tool-logs
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:08 lean-check
+drwxr-xr-x  3 runner runner 4096 Nov  3 11:08 rerun
+
+review/lean-check:
+total 60
+drwxr-xr-x 2 runner runner  4096 Nov  3 11:08 .
+drwxr-xr-x 6 runner runner  4096 Nov  3 11:11 ..
+-rw-r--r-- 1 runner runner 22347 Nov  3 11:08 Assignment4Verification.lean
+-rw-r--r-- 1 runner runner  3122 Nov  3 11:08 AxiomAudit.lean
+-rw-r--r-- 1 runner runner  6209 Nov  3 11:08 axioms-own.log
+-rw-r--r-- 1 runner runner  6209 Nov  3 11:08 axioms.log
+-rw-r--r-- 1 runner runner  2064 Nov  3 11:08 build-o.log
+-rw-r--r-- 1 runner runner  2064 Nov  3 11:08 build.log
+review/.tool-logs/shell-df8701a5add64dd9b5b33e456ec257ca.log
+review/.tool-logs/shell-c988ed60b69946519447d7988706768d.log
+review/lean-check/axioms-own.log
+review/lean-check/build.log
+review/lean-check/axioms.log
+review/lean-check/Assignment4Verification.lean
+review/lean-check/AxiomAudit.lean
+review/lean-check/build-o.log
+review/rerun/unit-tests.log
+review/rerun/simulate-stderr.log
+review/rerun/simulate-stdout.json

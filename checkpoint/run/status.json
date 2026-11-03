@@ -1,11 +1,49 @@
 {
   "preflight": {
-    "time": "2026-11-03T11:11:14.893524+00:00",
+    "time": "2026-11-03T11:11:47.112487+00:00",
     "role": "preflight",
-    "event": "request_retry",
-    "call_id": "preflight-3ed04d0bf1b6",
-    "summary": "HTTP 502",
-    "reservation_retained": true,
-    "attempt": 3
+    "event": "turn_finished",
+    "summary": "PREFLIGHT_OK",
+    "rounds": 2
+  },
+  "coordinator": {
+    "time": "2026-11-03T11:11:47.113078+00:00",
+    "role": "coordinator",
+    "event": "cycle_started",
+    "cycle": 1,
+    "summary": "Research/proof/simulation slice, then independent review and report"
+  },
+  "research": {
+    "time": "2026-11-03T11:13:52.921416+00:00",
+    "role": "research",
+    "event": "request",
+    "call_id": "research-0c5afd8e8a0a",
+    "attempt": 1,
+    "request_bytes": 186197,
+    "input_bound": 190293,
+    "max_output_tokens": 393216,
+    "requested_reasoning": "max"
+  },
+  "lean": {
+    "time": "2026-11-03T11:13:18.403217+00:00",
+    "role": "lean",
+    "event": "request",
+    "call_id": "lean-6faa3a0454d0",
+    "attempt": 1,
+    "request_bytes": 90684,
+    "input_bound": 94780,
+    "max_output_tokens": 393216,
+    "requested_reasoning": "max"
+  },
+  "simulation": {
+    "time": "2026-11-03T11:13:14.147489+00:00",
+    "role": "simulation",
+    "event": "request",
+    "call_id": "simulation-85f724e7482e",
+    "attempt": 3,
+    "request_bytes": 65551,
+    "input_bound": 69647,
+    "max_output_tokens": 65536,
+    "requested_reasoning": "max"
   }
 }

@@ -1,0 +1,17 @@
+/home/runner/work/test-4/test-4/lean
+/home/runner/work/test-4/test-4/lean
+Cli
+LeanSearchClient
+Qq
+aesop
+batteries
+importGraph
+mathlib
+plausible
+proofwidgets
+BUILD_EXIT=0
+Hint: Omit it from the simp argument list.
+  [apply] simp [lostTimer, hdt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Build completed successfully (1964 jobs).

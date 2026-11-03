@@ -1,0 +1,111 @@
+    def step(self,odom,readings,dt):
+        x,y,theta=odom; front=readings['front']; left=readings['left_front']; back=readings['left_back']
+        v=omega=0.
+        if self.test=='goal':
+            distance=math.hypot(.8-x,.5-y); target=math.atan2(.5-y,.8-x)
+            if self.state=='rotate_to_goal':
+                error=wrap(target-theta); omega=max(-.8,min(.8,2.4*error))
+                if abs(error)<.04: self.state='translate'
+            elif self.state=='translate':
+                error=wrap(target-theta); v=min(self.speed,.8*distance); omega=max(-.8,min(.8,2.*error))
+                if distance<=.04: self.state='final_heading'; v=0.
+            elif self.state=='final_heading':
+                omega=max(-.8,min(.8,-2.4*theta))
+                if abs(theta)<=math.radians(3): self.state='hold'; omega=0.
+            elif self.state=='hold':
+                if distance>.05 or abs(theta)>math.radians(5):
+                    self.state='rotate_to_goal'; self.hold=0.
+                else:
+                    self.hold+=dt; self.finished=self.hold>=1.
+        elif self.test=='approach':
+            if self.state=='approach':
+                self.lost=lost_timer(self.lost,front is not None,dt)
+                if front is None:
+                    v=0.
+                    if self.lost>=.5: self.state='sensor_failure'
+                elif front<=.202:
+                    self.state='hold'
+                else:
+                    v=min(self.speed,max(.005,.7*(front-.20)))
+            elif self.state=='hold':
+                self.hold+=dt; self.finished=self.hold>=1.
+        else:
+            if self.state=='corner_turn':
+                error=wrap(self.turn_origin-math.pi/2-theta)
+                omega=max(-.65,min(.65,2.2*error))
+                if abs(error)<.025:
+                    self.state='follow_second'; self.second_origin=odom[:2]; omega=0.
+            elif self.state in ['follow_first','follow_second']:
+                self.lost=lost_timer(self.lost,left is not None and back is not None,dt)
+                if self.state=='follow_first' and front is not None and front<.65:
+                    if turn_space_clear(readings):
+                        self.state='corner_turn'; self.turn_origin=theta
+                    else:
+                        self.state='unsafe_turn_stop'
+                elif self.lost>=.5:
+                    self.state='sensor_failure'
+                else:
+                    v=self.speed if self.lost==0 else .03
+                    if left is not None and back is not None:
+                        heading=math.atan2(back-left,.32)
+                        omega=max(-.6,min(.6,1.8*((left+back)/2-.30)-2.5*heading))
+                    if self.state=='follow_second' and math.hypot(x-self.second_origin[0],y-self.second_origin[1])>=1.2:
+                        self.state='hold'; v=omega=0.
+            elif self.state=='hold':
+                self.hold+=dt; self.finished=self.hold>=1.
+        # Final protection applies AFTER every behavior, never before overwrite.
+        return protect(v,omega,front)
+
+def run_case(name,test,speed,destination,slip=0.):
+    walls=[] if test=='goal' else [rectangle(1.73,-2,1.83,2)] if test=='approach' else [rectangle(-2,.8,3.1,.9),rectangle(3,-4,3.1,.9)]
+    pose=(0.,0.,0.) if test!='corner' else (0.,.31,0.)
+    odom=pose; policy=Policy(test,speed); rows=[]; left_angle=right_angle=0.
+    collision=False; min_clearance=math.inf; stop_time=None; second_start=None; first_progress=0.
+    for step in range(int(180/DT)+1):
+        t=step*DT; readings=sensors(pose,walls)
+        v,omega=policy.step(odom,readings,DT); wl,wr=wheel_command(v,omega)
+        clearance=min((polygon_distance(footprint(pose),wall) for wall in walls),default=math.inf)
+        collision=collision or clearance<=1e-10; min_clearance=min(min_clearance,clearance)
+        if policy.state=='corner_turn' and not first_progress: first_progress=odom[0]
+        if policy.state=='follow_second' and second_start is None: second_start=odom[:2]
+        if policy.state=='hold' and stop_time is None: stop_time=t
+        rows.append({'time_s':t,'x_gt_m':pose[0],'y_gt_m':pose[1],'theta_gt_rad':pose[2],
+                     'x_odom_m':odom[0],'y_odom_m':odom[1],'theta_odom_rad':odom[2],
+                     'wheel_left_angle_rad':left_angle,'wheel_right_angle_rad':right_angle,
+                     'wheel_left_measured_rad_s':wl,'wheel_right_measured_rad_s':wr,
+                     'wheel_left_command_rad_s':wl,'wheel_right_command_rad_s':wr,
+                     'front_range_m':readings['front'],'left_front_range_m':readings['left_front'],
+                     'left_back_range_m':readings['left_back'],'state':policy.state,
+                     'footprint_clearance_m':None if math.isinf(clearance) else clearance,'collision':int(collision)})
+        if policy.finished or collision or policy.state in ['sensor_failure','unsafe_turn_stop']: break
+        # Ideal wheel-rate actuator. Ground-truth translation can optionally have
+        # a slip factor; encoder odometry continues to use measured wheel rotation.
+        increments=(wl*DT,wr*DT); left_angle+=increments[0]; right_angle+=increments[1]
+        odom=integrate(odom,*increments)
+        true_next=integrate(pose,*increments)
+        pose=(pose[0]+(true_next[0]-pose[0])*(1-slip),pose[1]+(true_next[1]-pose[1])*(1-slip),true_next[2])
+    destination.mkdir(parents=True,exist_ok=True)
+    with (destination/(name+'.csv')).open('w',newline='',encoding='utf-8') as file:
+        writer=csv.DictWriter(file,fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
+    write_trajectory_svg(destination/(name+'.svg'),name,rows,walls)
+    result={'case':name,'evidence_type':'ideal_2d_kinematic_surrogate','completed':policy.finished,
+            'final_state':policy.state,'duration_s':rows[-1]['time_s'],'stop_time_s':stop_time,
+            'collision':collision,'minimum_clearance_m':None if math.isinf(min_clearance) else min_clearance,
+            'final_clearance_m':rows[-1]['footprint_clearance_m'],'final_estimated_pose':odom,'final_actual_pose':pose,
+            'odometry_error':[odom[0]-pose[0],odom[1]-pose[1],wrap(odom[2]-pose[2])],
+            'speed_m_s':speed,'sample_s':DT,'slip_fraction':slip,'hold_s':policy.hold}
+    if test=='goal':
+        result.update(estimated_goal_position_error_m=math.hypot(odom[0]-.8,odom[1]-.5),estimated_goal_heading_error_deg=math.degrees(abs(wrap(odom[2]))))
+    elif test=='corner':
+        second_progress=math.hypot(odom[0]-second_start[0],odom[1]-second_start[1]) if second_start else 0.
+        # Shortest footprint distance to the relevant wall, evaluated only from GT.
+        errors=[abs(polygon_distance(footprint((r['x_gt_m'],r['y_gt_m'],r['theta_gt_rad'])), walls[0 if r['state']=='follow_first' else 1])-.30)
+                for r in rows if r['state'] in ['follow_first','follow_second']]
+        result.update(first_straight_progress_m=first_progress,second_section_displacement_m=second_progress,
+                      second_wall_parallel_progress_m=second_start[1]-odom[1] if second_start else 0.,
+                      mean_abs_straight_clearance_error_m=sum(errors)/len(errors) if errors else None,
+                      max_abs_straight_clearance_error_m=max(errors) if errors else None)
+    return result
+
+def write_trajectory_svg(path,name,rows,walls):
+    """Dependency-free equal-scale trajectory plot. GT evaluation only."""

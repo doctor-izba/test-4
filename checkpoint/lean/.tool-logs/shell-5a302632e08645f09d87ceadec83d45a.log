@@ -1,0 +1,32 @@
+total 128
+drwxr-xr-x  5 runner runner  4096 Nov  3 11:11 .
+drwxr-xr-x 15 runner runner  4096 Nov  3 11:11 ..
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:11 .home
+drwxr-xr-x  4 runner runner  4096 Nov  3 11:10 .lake
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:11 .tool-logs
+-rw-r--r--  1 runner runner 22347 Nov  3 11:08 Assignment4Verification.lean
+-rw-r--r--  1 runner runner  3122 Nov  3 11:08 AxiomAudit.lean
+-rw-r--r--  1 runner runner  2075 Nov  3 11:08 README.md
+-rw-r--r--  1 runner runner   880 Nov  3 11:08 RefProbe.lean
+-rw-r--r--  1 runner runner 10227 Nov  3 11:08 Scratch.lean
+-rw-r--r--  1 runner runner  4353 Nov  3 11:08 VERIFICATION-NOTES.md
+-rw-r--r--  1 runner runner  6209 Nov  3 11:08 axioms.log
+-rw-r--r--  1 runner runner  1851 Nov  3 11:08 build.log
+-rw-r--r--  1 runner runner  2234 Nov  3 11:08 check_local.py
+-rw-r--r--  1 runner runner  6209 Nov  3 11:08 final-axioms.log
+-rw-r--r--  1 runner runner  1847 Nov  3 11:08 final-build.log
+-rw-r--r--  1 runner runner  3146 Nov  3 11:08 lake-manifest.json
+-rw-r--r--  1 runner runner   251 Nov  3 11:08 lakefile.toml
+-rw-r--r--  1 runner runner    25 Nov  3 11:08 lean-toolchain
+-rw-r--r--  1 runner runner  1851 Nov  3 11:08 local-build.log
+-rw-r--r--  1 runner runner   400 Nov  3 11:08 local-verification.json
+-rw-r--r--  1 runner runner  1847 Nov  3 11:08 verification.log
+---
+./RefProbe.lean
+./lean-toolchain
+./lakefile.toml
+./Scratch.lean
+./README.md
+./Assignment4Verification.lean
+./AxiomAudit.lean
+./VERIFICATION-NOTES.md

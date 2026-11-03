@@ -1,0 +1,203 @@
+
+theorem holdRun_ge_lastAllTrue (limit n : ℕ) (bs : List Bool)
+    (hn : n ≤ limit) (h : n ≤ holdRun limit bs) : LastAllTrue n bs := by
+  induction bs generalizing n with
+  | nil =>
+      simp [holdRun] at h
+      subst h
+      simp [LastAllTrue]
+  | cons b bs ih =>
+      cases n with
+      | zero => simp [LastAllTrue]
+      | succ n =>
+          cases b with
+          | false => simp [holdRun, holdStep] at h
+          | true =>
+              have h' : n + 1 ≤ min (holdRun limit bs + 1) limit := by
+                simpa [holdRun, holdStep] using h
+              have h1 : n ≤ holdRun limit bs := by
+                have := le_trans h' (min_le_left (holdRun limit bs + 1) limit)
+                omega
+              have h2 : n ≤ limit := by
+                have := le_trans h' (min_le_right (holdRun limit bs + 1) limit)
+                omega
+              exact ⟨rfl, ih n h2 h1⟩
+
+theorem holdRun_success_contiguous (limit : ℕ) (bs : List Bool)
+    (h : holdRun limit bs = limit) : LastAllTrue limit bs := by
+  apply holdRun_ge_lastAllTrue limit limit bs le_rfl
+  omega
+
+theorem holdRun_reset (limit : ℕ) (bs : List Bool) :
+    holdRun limit (false :: bs) = 0 := by
+  simp [holdRun, holdStep]
+
+theorem holdStep_le (limit held : ℕ) (b : Bool) :
+    holdStep limit held b ≤ limit := by
+  cases b <;> simp [holdStep]
+
+/-- Zero body commands map to zero measured wheel-rate targets. -/
+theorem zero_command_zero_wheels (b r : ℝ) :
+    wl 0 0 b r = 0 ∧ wr 0 0 b r = 0 := by
+  simp [wl, wr]
+
+/-! ## Measured-wheel odometry composition -/
+def odomHeading (b r theta dL dR : ℝ) : ℝ :=
+  wrap (theta + measuredHeadingIncrement b r dL dR)
+
+theorem measuredHeadingIncrement_add (b r aL aR bL bR : ℝ) :
+    measuredHeadingIncrement b r (aL + bL) (aR + bR)
+      = measuredHeadingIncrement b r aL aR +
+        measuredHeadingIncrement b r bL bR := by
+  unfold measuredHeadingIncrement
+  ring
+
+/-- Two measured-increment odometry updates compose into one update whose
+increments are the sums.  This is a statement about the exact real arithmetic;
+encoder quantization, slip and timing remain outside the model. -/
+theorem odomHeading_compose (b r theta aL aR bL bR : ℝ) :
+    odomHeading b r (odomHeading b r theta aL aR) bL bR
+      = odomHeading b r theta (aL + bL) (aR + bR) := by
+  unfold odomHeading
+  rw [measuredHeadingIncrement_add]
+  rw [← wrap_add]
+  congr 1
+  ring
+
+theorem odomHeading_range (b r theta dL dR : ℝ) :
+    -Real.pi ≤ odomHeading b r theta dL dR ∧
+    odomHeading b r theta dL dR < Real.pi :=
+  wrap_range _
+
+/-! ## Conditional stopping-distance safety
+
+`stopDistance` models latency plus constant-deceleration braking.  The theorem
+is conditional on the stated latency, speed bound and positive deceleration;
+it does not model tyre slip, actuator delay distribution or sensing latency. -/
+def stopDistance (v latency decel : ℝ) : ℝ :=
+  v * latency + v ^ 2 / (2 * decel)
+
+def brakeThreshold (vmax latency decel : ℝ) : ℝ :=
+  stopDistance vmax latency decel
+
+theorem stopDistance_le_threshold (v vmax latency decel : ℝ)
+    (hv0 : 0 ≤ v) (hvv : v ≤ vmax) (hl : 0 ≤ latency) (hd : 0 < decel) :
+    stopDistance v latency decel ≤ brakeThreshold vmax latency decel := by
+  simp only [stopDistance, brakeThreshold]
+  have h1 : v * latency ≤ vmax * latency := mul_le_mul_of_nonneg_right hvv hl
+  have h2 : v ^ 2 ≤ vmax ^ 2 := by nlinarith
+  have h3 : v ^ 2 / (2 * decel) ≤ vmax ^ 2 / (2 * decel) :=
+    div_le_div_of_nonneg_right h2 (by positivity)
+  linarith
+
+/-- Kinematic identity for the braking phase: with constant deceleration
+`decel`, travelling for `v / decel` seconds covers `v^2 / (2 * decel)`. -/
+theorem braking_distance_identity (v decel latency : ℝ) (hd : decel ≠ 0) :
+    v * latency + (v * (v / decel) - decel * (v / decel) ^ 2 / 2)
+      = stopDistance v latency decel := by
+  unfold stopDistance
+  field_simp
+  ring
+
+/-! ## Swept turning footprint
+
+The farthest point of an axis-aligned footprint with half-length `L` and
+half-width `W` from the axle midpoint is the corner at distance
+`sqrt (L^2 + W^2)`.  This is a geometric bound; collision checking still has
+to use the actual wall distance. -/
+theorem swept_radius_sq (L W : ℝ) :
+    (Real.sqrt (L ^ 2 + W ^ 2)) ^ 2 = L ^ 2 + W ^ 2 := by
+  rw [Real.sq_sqrt]
+  positivity
+
+theorem corner_within_swept_radius (L W x y : ℝ)
+    (hx : x ^ 2 ≤ L ^ 2) (hy : y ^ 2 ≤ W ^ 2) :
+    x ^ 2 + y ^ 2 ≤ (Real.sqrt (L ^ 2 + W ^ 2)) ^ 2 := by
+  rw [swept_radius_sq]
+  linarith
+
+
+end Assignment4
+=== SCRATCH ===
+import Mathlib.Algebra.Order.ToIntervalMod
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Tactic
+
+noncomputable section
+namespace T
+
+def wrap (theta : ℝ) : ℝ := toIcoMod Real.two_pi_pos (-Real.pi) theta
+
+theorem wrap_add (x y : ℝ) : wrap (x + y) = wrap (wrap x + y) := by
+  unfold wrap
+  rw [toIcoMod_eq_iff]
+  constructor
+  · exact toIcoMod_mem_Ico _ _ _
+  · have hx : ∃ z : ℤ, x = toIcoMod Real.two_pi_pos (-Real.pi) x + z • (2 * Real.pi) := by
+      have := (toIcoMod_eq_iff (p := 2 * Real.pi) (hp := Real.two_pi_pos) (a := -Real.pi) (b := x) (c := toIcoMod Real.two_pi_pos (-Real.pi) x)).1 rfl
+      exact this.2
+    have hy : ∃ z : ℤ, toIcoMod Real.two_pi_pos (-Real.pi) x + y =
+        toIcoMod Real.two_pi_pos (-Real.pi) (toIcoMod Real.two_pi_pos (-Real.pi) x + y) + z • (2 * Real.pi) := by
+      have := (toIcoMod_eq_iff (p := 2 * Real.pi) (hp := Real.two_pi_pos) (a := -Real.pi)
+        (b := toIcoMod Real.two_pi_pos (-Real.pi) x + y)
+        (c := toIcoMod Real.two_pi_pos (-Real.pi) (toIcoMod Real.two_pi_pos (-Real.pi) x + y))).1 rfl
+      exact this.2
+    obtain ⟨z, hz⟩ := hx
+    obtain ⟨z', hz'⟩ := hy
+    refine ⟨z' + z, ?_⟩
+    calc x + y = (toIcoMod Real.two_pi_pos (-Real.pi) x + z • (2 * Real.pi)) + y := by nth_rewrite 1 [hz]; rfl
+      _ = (toIcoMod Real.two_pi_pos (-Real.pi) x + y) + z • (2 * Real.pi) := by abel
+      _ = (toIcoMod Real.two_pi_pos (-Real.pi) (toIcoMod Real.two_pi_pos (-Real.pi) x + y) + z' • (2 * Real.pi)) + z • (2 * Real.pi) := by nth_rewrite 1 [hz']; rfl
+      _ = toIcoMod Real.two_pi_pos (-Real.pi) (toIcoMod Real.two_pi_pos (-Real.pi) x + y) + (z' + z) • (2 * Real.pi) := by simp only [add_zsmul]; abel
+
+#check exists_nat_gt
+#check Nat.iterate
+#check Real.cos_neg
+#check Real.sin_neg
+#check Real.cos_add
+#check Real.sin_add
+#check Real.cos_pi_div_two
+#check Real.sin_pi_div_two
+
+def rotX (theta x y : ℝ) : ℝ := x * Real.cos theta - y * Real.sin theta
+def rotY (theta x y : ℝ) : ℝ := x * Real.sin theta + y * Real.cos theta
+
+theorem rot_inverse (theta x y : ℝ) :
+    rotX (-theta) (rotX theta x y) (rotY theta x y) = x ∧
+    rotY (-theta) (rotX theta x y) (rotY theta x y) = y := by
+  unfold rotX rotY
+  rw [Real.cos_neg, Real.sin_neg]
+  constructor
+  · ring_nf
+    linear_combination x * Real.sin_sq_add_cos_sq theta
+  · ring_nf
+    linear_combination y * Real.sin_sq_add_cos_sq theta
+
+theorem rot_compose (theta phi x y : ℝ) :
+    rotX (theta + phi) x y = rotX theta (rotX phi x y) (rotY phi x y) ∧
+    rotY (theta + phi) x y = rotY theta (rotX phi x y) (rotY phi x y) := by
+  unfold rotX rotY
+  rw [Real.cos_add, Real.sin_add]
+  constructor <;> ring
+=== REFPROBE ===
+import Assignment4Verification
+
+open Assignment4
+
+def ratAbs (q : Rat) : Rat := if q < 0 then -q else q
+def ratLimitDenom (l r limit : Rat) : Rat := max 1 (max (ratAbs l) (ratAbs r) / limit)
+def ratFrontGate (reading : Option Rat) (brake v : Rat) : Rat :=
+  match reading with
+  | none => 0
+  | some d => if d ≤ brake then min v 0 else v
+def ratLostTimer (detected : Bool) (elapsed dt : Rat) : Rat :=
+  if detected then 0 else elapsed + max 0 dt
+
+def showQ (q : Rat) : String := s!"{q.num}/{q.den}"
+
+def main : IO Unit := do
+  IO.println s!"gate_none={showQ (ratFrontGate none (12/100) (1/2))}"
+  IO.println s!"gate_low={showQ (ratFrontGate (some (1/10)) (12/100) (1/2))}"
+  IO.println s!"gate_high={showQ (ratFrontGate (some (1/5)) (12/100) (1/2))}"
+  IO.println s!"limit={showQ (ratLimitDenom (3/2) (-9/2) 6)}"
+  IO.println s!"timer={showQ (ratLostTimer false (1/2) (1/20))}"

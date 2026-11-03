@@ -1,0 +1,19 @@
+leanprover/lean4:v4.34.0
+---
+name = "assignment4-verification"
+version = "0.1.0"
+defaultTargets = ["Assignment4Verification"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.34.0"
+
+[[lean_lib]]
+name = "Assignment4Verification"
+---
+total 16
+drwxr-xr-x  4 runner runner 4096 Nov  3 11:10 .
+drwxr-xr-x  5 runner runner 4096 Nov  3 11:11 ..
+drwxr-xr-x  4 runner runner 4096 Nov  3 11:10 config
+drwxr-xr-x 11 runner runner 4096 Nov  3 11:10 packages
