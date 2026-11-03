@@ -2,8 +2,8 @@
   "command": "lake env lean CombinedAudit.lean",
   "source_sha256": "8b8378c0deb81484d16cf5e3aff0f060e786bc72019d7533f986e1641de135cc",
   "audit_sha256": "40f3be18e35e4acbded1f28269a8f586aea73d219c7d0df4cf4603b84411962c",
-  "exit_code": 1,
-  "elapsed_seconds": 26.51,
+  "exit_code": 0,
+  "elapsed_seconds": 33.21,
   "audit_theorem_count": 34,
   "scope": "Source+axioms compilation using existing dependencies; not a clean pinned cloud build."
 }
