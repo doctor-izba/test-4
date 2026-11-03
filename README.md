@@ -34,6 +34,20 @@ bubblewrap sandbox with a sanitized environment and no network. Research downloa
 go through a separate URL-fetch tool. Only the trusted coordinator talks to Nube.
 The runner's GitHub publishing credential is supplied only to trusted workflow steps.
 
+### Telegram progress (optional)
+
+The separate **Telegram progress monitor** workflow reads an existing Actions run
+and edits one Telegram message on actual stage changes/completion. No VPS, webhook,
+paid model or persistent local process is needed. It uses `TELEGRAM_BOT_TOKEN` and
+`TELEGRAM_CHAT_ID` stored only as Actions Secrets. A local masked setup dialog binds
+the private chat using a unique START link, then installs the secrets and dispatches
+the monitor. Do not paste the token into issues, commits, logs or public chat.
+
+For the current research run, the monitor sees workflow stages, not each worker's
+internal live messages. Detailed live worker actions remain in the Actions log.
+Final per-worker states and token cost are included when the evidence branch exists.
+The monitor does not restart/cancel agents or bypass the repository budget guard.
+
 ## What the free simulator means
 
 `simulation/` is a deterministic, simplified 2D model for controller development,

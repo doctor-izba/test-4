@@ -1,0 +1,30 @@
+name: Telegram progress monitor
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Existing Cloud robotics team run ID
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: telegram-monitor
+  cancel-in-progress: true
+jobs:
+  monitor:
+    if: ${{ github.event.repository.private == false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 225
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Send only real stage changes and completion to the user's Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+          TARGET_RUN: ${{ inputs.run_id }}
+        run: python cloud/telegram_monitor.py --run-id "$TARGET_RUN"
