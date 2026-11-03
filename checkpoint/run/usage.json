@@ -1,0 +1,80 @@
+{
+  "limit_usd": "3.52",
+  "confirmed_usd": "0.0031569426",
+  "reserved_usd": "0.648287145",
+  "reservations": {
+    "lean-3e7c6ddb75ff": "0.215226045",
+    "simulation-282c36a0e2f6": "0.217600155",
+    "research-73d51c43c322": "0.215460945"
+  },
+  "reservation_states": {
+    "lean-3e7c6ddb75ff": "active",
+    "simulation-282c36a0e2f6": "active",
+    "research-73d51c43c322": "active"
+  },
+  "stop_reason": null,
+  "calls": [
+    {
+      "id": "preflight-01bc66e94463",
+      "prompt_tokens": 351,
+      "completion_tokens": 38,
+      "cached_tokens": 0,
+      "usd": "0.000067905"
+    },
+    {
+      "id": "preflight-8d3406bf020e",
+      "prompt_tokens": 1891,
+      "completion_tokens": 5,
+      "cached_tokens": 256,
+      "usd": "0.0002241162"
+    },
+    {
+      "id": "lean-aaa600bd7e3c",
+      "prompt_tokens": 2627,
+      "completion_tokens": 143,
+      "cached_tokens": 0,
+      "usd": "0.000431865"
+    },
+    {
+      "id": "simulation-c3edd37663b3",
+      "prompt_tokens": 2597,
+      "completion_tokens": 168,
+      "cached_tokens": 0,
+      "usd": "0.000441315"
+    },
+    {
+      "id": "research-6bbf7f99be5d",
+      "prompt_tokens": 2665,
+      "completion_tokens": 213,
+      "cached_tokens": 0,
+      "usd": "0.000474795"
+    },
+    {
+      "id": "lean-1e54510865b1",
+      "prompt_tokens": 3328,
+      "completion_tokens": 87,
+      "cached_tokens": 2432,
+      "usd": "0.0001745064"
+    },
+    {
+      "id": "simulation-713bb1a31a90",
+      "prompt_tokens": 3481,
+      "completion_tokens": 221,
+      "cached_tokens": 0,
+      "usd": "0.000589275"
+    },
+    {
+      "id": "research-6da4a397cd47",
+      "prompt_tokens": 4559,
+      "completion_tokens": 255,
+      "cached_tokens": 0,
+      "usd": "0.000753165"
+    }
+  ],
+  "rates_usd_per_million": {
+    "uncached_input": ".135",
+    "cached_input": ".0027",
+    "output": ".540"
+  },
+  "pricing_basis": "User-supplied Nube rates; not independently verified billing"
+}

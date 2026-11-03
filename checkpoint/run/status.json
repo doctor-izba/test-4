@@ -1,0 +1,49 @@
+{
+  "preflight": {
+    "time": "2026-11-03T08:26:28.147472+00:00",
+    "role": "preflight",
+    "event": "turn_finished",
+    "summary": "PREFLIGHT_OK",
+    "rounds": 2
+  },
+  "coordinator": {
+    "time": "2026-11-03T08:26:28.148200+00:00",
+    "role": "coordinator",
+    "event": "cycle_started",
+    "cycle": 1,
+    "summary": "Research/proof/simulation slice, then independent review and report"
+  },
+  "research": {
+    "time": "2026-11-03T08:26:35.585256+00:00",
+    "role": "research",
+    "event": "request",
+    "call_id": "research-73d51c43c322",
+    "attempt": 1,
+    "request_bytes": 19047,
+    "input_bound": 23143,
+    "max_output_tokens": 393216,
+    "requested_reasoning": "max"
+  },
+  "lean": {
+    "time": "2026-11-03T08:26:34.342270+00:00",
+    "role": "lean",
+    "event": "request",
+    "call_id": "lean-3e7c6ddb75ff",
+    "attempt": 1,
+    "request_bytes": 17307,
+    "input_bound": 21403,
+    "max_output_tokens": 393216,
+    "requested_reasoning": "max"
+  },
+  "simulation": {
+    "time": "2026-11-03T08:26:34.653036+00:00",
+    "role": "simulation",
+    "event": "request",
+    "call_id": "simulation-282c36a0e2f6",
+    "attempt": 1,
+    "request_bytes": 34893,
+    "input_bound": 38989,
+    "max_output_tokens": 393216,
+    "requested_reasoning": "max"
+  }
+}
