@@ -1,0 +1,39 @@
+{
+  "limit_usd": "3.23",
+  "confirmed_usd": "0",
+  "reserved_usd": "0.004145445",
+  "reservations": {
+    "preflight-0ab1d3ba6f77": "0.001381725",
+    "preflight-8894fc749c34": "0.00138186",
+    "preflight-3ed04d0bf1b6": "0.00138186"
+  },
+  "reservation_states": {
+    "preflight-0ab1d3ba6f77": "uncertain",
+    "preflight-8894fc749c34": "uncertain",
+    "preflight-3ed04d0bf1b6": "uncertain"
+  },
+  "stop_reason": null,
+  "calls": [
+    {
+      "id": "preflight-0ab1d3ba6f77",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "preflight-8894fc749c34",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "preflight-3ed04d0bf1b6",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    }
+  ],
+  "rates_usd_per_million": {
+    "uncached_input": ".135",
+    "cached_input": ".0027",
+    "output": ".540"
+  },
+  "pricing_basis": "User-supplied Nube rates; not independently verified billing"
+}

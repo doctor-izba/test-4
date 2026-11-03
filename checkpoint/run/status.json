@@ -1,0 +1,11 @@
+{
+  "preflight": {
+    "time": "2026-11-03T11:11:14.893524+00:00",
+    "role": "preflight",
+    "event": "request_retry",
+    "call_id": "preflight-3ed04d0bf1b6",
+    "summary": "HTTP 502",
+    "reservation_retained": true,
+    "attempt": 3
+  }
+}
