@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "state": "authorized",
+  "state": "claimed_before_inference",
   "authorization_id": "resume-streaming-six-hour-team-2026-11-03",
   "maximum_usd": "3.23",
   "previous_run_id": "41602972991",
@@ -19,5 +19,6 @@
       "reserved_usd": "0.22862466"
     }
   ],
-  "note": "User requested immediate continuation after transient524. Prior uncertain reservation remains fully counted; no blind write-off."
+  "note": "User requested immediate continuation after transient524. Prior uncertain reservation remains fully counted; no blind write-off.",
+  "run_id": "41625019577"
 }
