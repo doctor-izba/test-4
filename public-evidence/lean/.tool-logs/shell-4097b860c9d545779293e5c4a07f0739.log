@@ -1,0 +1,40 @@
+74:def toIcoMod (a b : α) : α :=
+81:theorem toIcoMod_mem_Ico (a b : α) : toIcoMod hp a b ∈ Set.Ico a (a + p) :=
+84:theorem toIcoMod_mem_Ico' (b : α) : toIcoMod hp 0 b ∈ Set.Ico 0 p := by
+97:theorem toIcoMod_lt_right (a b : α) : toIcoMod hp a b < a + p :=
+120:theorem toIcoMod_sub_self (a b : α) : toIcoMod hp a b - b = -toIcoDiv hp a b • p := by
+136:theorem toIcoMod_add_toIcoDiv_zsmul (a b : α) : toIcoMod hp a b + toIcoDiv hp a b • p = b := by
+151:theorem toIcoMod_eq_iff : toIcoMod hp a b = c ↔ c ∈ Set.Ico a (a + p) ∧ ∃ z : ℤ, b = c + z • p := by
+178:theorem toIcoMod_apply_left (a : α) : toIcoMod hp a a = a := by
+179:  rw [toIcoMod_eq_iff hp, Set.left_mem_Ico]
+193:theorem toIcoMod_apply_right (a : α) : toIcoMod hp a (a + p) = a := by
+194:  rw [toIcoMod_eq_iff hp, Set.left_mem_Ico]
+386:theorem toIcoMod_add_zsmul (a b : α) (m : ℤ) : toIcoMod hp a (b + m • p) = toIcoMod hp a b := by
+391:theorem toIcoMod_add_nsmul (a b : α) (m : ℕ) : toIcoMod hp a (b + m • p) = toIcoMod hp a b :=
+395:theorem toIcoMod_add_zsmul' (a b : α) (m : ℤ) :
+400:theorem toIcoMod_add_nsmul' (a b : α) (m : ℕ) :
+424:theorem toIcoMod_zsmul_add (a b : α) (m : ℤ) : toIcoMod hp a (m • p + b) = toIcoMod hp a b := by
+428:theorem toIcoMod_nsmul_add (a b : α) (m : ℕ) : toIcoMod hp a (m • p + b) = toIcoMod hp a b :=
+432:theorem toIcoMod_zsmul_add' (a b : α) (m : ℤ) :
+437:theorem toIcoMod_nsmul_add' (a b : α) (m : ℕ) :
+460:theorem toIcoMod_sub_zsmul (a b : α) (m : ℤ) : toIcoMod hp a (b - m • p) = toIcoMod hp a b := by
+464:theorem toIcoMod_sub_nsmul (a b : α) (m : ℕ) : toIcoMod hp a (b - m • p) = toIcoMod hp a b :=
+468:theorem toIcoMod_sub_zsmul' (a b : α) (m : ℤ) :
+473:theorem toIcoMod_sub_nsmul' (a b : α) (m : ℕ) :
+496:theorem toIcoMod_add_right (a b : α) : toIcoMod hp a (b + p) = toIcoMod hp a b := by
+500:theorem toIcoMod_add_right' (a b : α) : toIcoMod hp (a + p) b = toIcoMod hp a b + p := by
+512:theorem toIcoMod_add_left (a b : α) : toIcoMod hp a (p + b) = toIcoMod hp a b := by
+516:theorem toIcoMod_add_left' (a b : α) : toIcoMod hp (p + a) b = p + toIcoMod hp a b := by
+528:theorem toIcoMod_sub (a b : α) : toIcoMod hp a (b - p) = toIcoMod hp a b := by
+532:theorem toIcoMod_sub' (a b : α) : toIcoMod hp (a - p) b = toIcoMod hp a b - p := by
+543:theorem toIcoMod_sub_eq_sub (a b c : α) : toIcoMod hp a (b - c) = toIcoMod hp (a + c) b - c := by
+549:theorem toIcoMod_add_right_eq_add (a b c : α) :
+557:theorem toIcoMod_neg (a b : α) : toIcoMod hp a (-b) = p - toIocMod hp (-a) b := by
+561:theorem toIcoMod_neg' (a b : α) : toIcoMod hp (-a) b = p - toIocMod hp a (-b) := by
+571:theorem toIcoMod_eq_toIcoMod : toIcoMod hp a b = toIcoMod hp a c ↔ ∃ n : ℤ, c - b = n • p := by
+596:theorem modEq_iff_toIcoMod_eq_left : a ≡ b [PMOD p] ↔ toIcoMod hp a b = a :=
+608:alias ⟨ModEq.toIcoMod_eq_left, _⟩ := modEq_iff_toIcoMod_eq_left
+610:alias ⟨ModEq.toIcoMod_eq_right, _⟩ := modEq_iff_toIocMod_eq_right
+619:  rw [modEq_iff_toIcoMod_eq_left hp]
+623:      ((toIcoMod_eq_iff hp).2 ⟨Set.Ioo_subset_Ico_self hi, i, (sub_add_cancel b _).symm⟩).trans
+654:theorem not_modEq_iff_toIcoMod_eq_toIocMod : ¬a ≡ b [PMOD p] ↔ toIcoMod hp a b = toIocMod hp a b :=

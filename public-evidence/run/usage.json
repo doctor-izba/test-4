@@ -1,0 +1,508 @@
+{
+  "limit_usd": "3.23",
+  "confirmed_usd": "0.0813070602",
+  "reserved_usd": "3.148692750",
+  "reservations": {
+    "preflight-0ab1d3ba6f77": "0.001381725",
+    "preflight-8894fc749c34": "0.00138186",
+    "preflight-3ed04d0bf1b6": "0.00138186",
+    "preflight-a5ada1b31f8d": "0.00138186",
+    "simulation-35cd5ce86015": "0.214925265",
+    "lean-def3a9691247": "0.22084488",
+    "research-43373fa31af0": "0.233619525",
+    "simulation-4515122990ef": "0.221738985",
+    "lean-79d93b70207b": "0.22319442",
+    "research-5bf242938552": "0.056672325",
+    "simulation-b228357b2dd1": "0.044791785",
+    "lean-177d3caa7bfe": "0.04624722",
+    "simulation-6dc2e8b7507e": "0.230514255",
+    "simulation-248b1f5aa7e1": "0.053567055",
+    "simulation-b6baa6a8c874": "0.053567055",
+    "simulation-149cd2a62c86": "0.053567055",
+    "simulation-6dc302c371e3": "0.053567055",
+    "simulation-de7fb015c0a3": "0.053567055",
+    "reviewer-32a81c92f553": "0.215507385",
+    "reviewer-4b96f0dd9841": "0.22246596",
+    "reviewer-a4ac35d8002c": "0.04551876",
+    "reviewer-05e830c7b035": "0.04551876",
+    "reviewer-e3689f70f1ab": "0.04551876",
+    "reviewer-01d811ecd2cb": "0.04551876",
+    "reviewer-e9aba114da54": "0.04551876",
+    "writer-8da23fd9c30f": "0.215549235",
+    "writer-014ad5cf0bcc": "0.038602035",
+    "writer-de175b6b5e02": "0.038602035",
+    "writer-333cfcc4a872": "0.038602035",
+    "writer-b206e6ba9493": "0.038602035",
+    "writer-631d43f25f4d": "0.038602035",
+    "research-e13f22509619": "0.24094557",
+    "lean-1cbcad499b48": "0.067709385"
+  },
+  "reservation_states": {
+    "preflight-0ab1d3ba6f77": "uncertain",
+    "preflight-8894fc749c34": "uncertain",
+    "preflight-3ed04d0bf1b6": "uncertain",
+    "preflight-a5ada1b31f8d": "uncertain",
+    "simulation-35cd5ce86015": "uncertain",
+    "lean-def3a9691247": "uncertain",
+    "research-43373fa31af0": "uncertain",
+    "simulation-4515122990ef": "uncertain",
+    "lean-79d93b70207b": "uncertain",
+    "research-5bf242938552": "uncertain",
+    "simulation-b228357b2dd1": "uncertain",
+    "lean-177d3caa7bfe": "uncertain",
+    "simulation-6dc2e8b7507e": "uncertain",
+    "simulation-248b1f5aa7e1": "uncertain",
+    "simulation-b6baa6a8c874": "uncertain",
+    "simulation-149cd2a62c86": "uncertain",
+    "simulation-6dc302c371e3": "uncertain",
+    "simulation-de7fb015c0a3": "uncertain",
+    "reviewer-32a81c92f553": "uncertain",
+    "reviewer-4b96f0dd9841": "uncertain",
+    "reviewer-a4ac35d8002c": "uncertain",
+    "reviewer-05e830c7b035": "uncertain",
+    "reviewer-e3689f70f1ab": "uncertain",
+    "reviewer-01d811ecd2cb": "uncertain",
+    "reviewer-e9aba114da54": "uncertain",
+    "writer-8da23fd9c30f": "uncertain",
+    "writer-014ad5cf0bcc": "uncertain",
+    "writer-de175b6b5e02": "uncertain",
+    "writer-333cfcc4a872": "uncertain",
+    "writer-b206e6ba9493": "uncertain",
+    "writer-631d43f25f4d": "uncertain",
+    "research-e13f22509619": "uncertain",
+    "lean-1cbcad499b48": "uncertain"
+  },
+  "stop_reason": "Run budget cannot cover another pessimistically reserved request",
+  "calls": [
+    {
+      "id": "preflight-0ab1d3ba6f77",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "preflight-8894fc749c34",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "preflight-3ed04d0bf1b6",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "preflight-a5ada1b31f8d",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "preflight-150691d4e59f",
+      "prompt_tokens": 351,
+      "completion_tokens": 56,
+      "cached_tokens": 0,
+      "usd": "0.000077625"
+    },
+    {
+      "id": "preflight-760b1fc061ab",
+      "prompt_tokens": 1909,
+      "completion_tokens": 5,
+      "cached_tokens": 0,
+      "usd": "0.000260415"
+    },
+    {
+      "id": "lean-9fa6aa861495",
+      "prompt_tokens": 2627,
+      "completion_tokens": 193,
+      "cached_tokens": 0,
+      "usd": "0.000458865"
+    },
+    {
+      "id": "research-b7f794d7808b",
+      "prompt_tokens": 2665,
+      "completion_tokens": 128,
+      "cached_tokens": 0,
+      "usd": "0.000428895"
+    },
+    {
+      "id": "simulation-3c26bd5c13b4",
+      "prompt_tokens": 2597,
+      "completion_tokens": 140,
+      "cached_tokens": 0,
+      "usd": "0.000426195"
+    },
+    {
+      "id": "simulation-35cd5ce86015",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "lean-fd9ea7c26621",
+      "prompt_tokens": 3765,
+      "completion_tokens": 98,
+      "cached_tokens": 0,
+      "usd": "0.000561195"
+    },
+    {
+      "id": "research-a000ccc3ecc9",
+      "prompt_tokens": 4402,
+      "completion_tokens": 202,
+      "cached_tokens": 0,
+      "usd": "0.00070335"
+    },
+    {
+      "id": "lean-2f850aa55140",
+      "prompt_tokens": 10188,
+      "completion_tokens": 188,
+      "cached_tokens": 0,
+      "usd": "0.0014769"
+    },
+    {
+      "id": "simulation-fa9a49559df1",
+      "prompt_tokens": 3611,
+      "completion_tokens": 107,
+      "cached_tokens": 0,
+      "usd": "0.000545265"
+    },
+    {
+      "id": "research-96dbcf7e0cfe",
+      "prompt_tokens": 7209,
+      "completion_tokens": 214,
+      "cached_tokens": 0,
+      "usd": "0.001088775"
+    },
+    {
+      "id": "lean-db41ae6db8c6",
+      "prompt_tokens": 16035,
+      "completion_tokens": 174,
+      "cached_tokens": 0,
+      "usd": "0.002258685"
+    },
+    {
+      "id": "simulation-b07d66fd4573",
+      "prompt_tokens": 5574,
+      "completion_tokens": 56,
+      "cached_tokens": 0,
+      "usd": "0.00078273"
+    },
+    {
+      "id": "research-1937488e5dc8",
+      "prompt_tokens": 14036,
+      "completion_tokens": 687,
+      "cached_tokens": 0,
+      "usd": "0.00226584"
+    },
+    {
+      "id": "simulation-fded4882b2c2",
+      "prompt_tokens": 10330,
+      "completion_tokens": 89,
+      "cached_tokens": 2432,
+      "usd": "0.0011208564"
+    },
+    {
+      "id": "lean-205a8c1e1d7f",
+      "prompt_tokens": 16401,
+      "completion_tokens": 180,
+      "cached_tokens": 0,
+      "usd": "0.002311335"
+    },
+    {
+      "id": "lean-def3a9691247",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "research-cf8825f52036",
+      "prompt_tokens": 14895,
+      "completion_tokens": 1136,
+      "cached_tokens": 0,
+      "usd": "0.002624265"
+    },
+    {
+      "id": "research-6321d3d1b903",
+      "prompt_tokens": 23914,
+      "completion_tokens": 961,
+      "cached_tokens": 0,
+      "usd": "0.00374733"
+    },
+    {
+      "id": "lean-1bf9ea4c7da4",
+      "prompt_tokens": 17239,
+      "completion_tokens": 1739,
+      "cached_tokens": 0,
+      "usd": "0.003266325"
+    },
+    {
+      "id": "simulation-1f7a812890a3",
+      "prompt_tokens": 12157,
+      "completion_tokens": 4386,
+      "cached_tokens": 10112,
+      "usd": "0.0026718174"
+    },
+    {
+      "id": "lean-dcce20acdd57",
+      "prompt_tokens": 20089,
+      "completion_tokens": 221,
+      "cached_tokens": 0,
+      "usd": "0.002831355"
+    },
+    {
+      "id": "research-43373fa31af0",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-4515122990ef",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "lean-79d93b70207b",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "lean-177d3caa7bfe",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-b228357b2dd1",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "research-5bf242938552",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "lean-60f23bfe71d0",
+      "prompt_tokens": 22332,
+      "completion_tokens": 310,
+      "cached_tokens": 0,
+      "usd": "0.00318222"
+    },
+    {
+      "id": "research-972bd67c83be",
+      "prompt_tokens": 41486,
+      "completion_tokens": 504,
+      "cached_tokens": 0,
+      "usd": "0.00587277"
+    },
+    {
+      "id": "research-38d52ea50050",
+      "prompt_tokens": 43572,
+      "completion_tokens": 544,
+      "cached_tokens": 0,
+      "usd": "0.00617598"
+    },
+    {
+      "id": "research-e2d4241ea5a7",
+      "prompt_tokens": 46021,
+      "completion_tokens": 870,
+      "cached_tokens": 43392,
+      "usd": "0.0009418734"
+    },
+    {
+      "id": "research-cf13c1863111",
+      "prompt_tokens": 48288,
+      "completion_tokens": 519,
+      "cached_tokens": 45824,
+      "usd": "0.0007366248"
+    },
+    {
+      "id": "research-0c5afd8e8a0a",
+      "prompt_tokens": 50706,
+      "completion_tokens": 2610,
+      "cached_tokens": 48128,
+      "usd": "0.0018873756"
+    },
+    {
+      "id": "lean-6faa3a0454d0",
+      "prompt_tokens": 26549,
+      "completion_tokens": 9022,
+      "cached_tokens": 0,
+      "usd": "0.008455995"
+    },
+    {
+      "id": "research-c80dcd8abf22",
+      "prompt_tokens": 54419,
+      "completion_tokens": 187,
+      "cached_tokens": 50560,
+      "usd": "0.000758457"
+    },
+    {
+      "id": "lean-7c06eefb9ba3",
+      "prompt_tokens": 35773,
+      "completion_tokens": 194,
+      "cached_tokens": 0,
+      "usd": "0.004934115"
+    },
+    {
+      "id": "lean-37b3a22c7fa2",
+      "prompt_tokens": 36141,
+      "completion_tokens": 171,
+      "cached_tokens": 35584,
+      "usd": "0.0002636118"
+    },
+    {
+      "id": "lean-1bde1801d5f8",
+      "prompt_tokens": 36446,
+      "completion_tokens": 222,
+      "cached_tokens": 35968,
+      "usd": "0.0002815236"
+    },
+    {
+      "id": "simulation-85f724e7482e",
+      "prompt_tokens": 17336,
+      "completion_tokens": 17217,
+      "cached_tokens": 0,
+      "usd": "0.01163754"
+    },
+    {
+      "id": "simulation-6dc2e8b7507e",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-248b1f5aa7e1",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-b6baa6a8c874",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-149cd2a62c86",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-6dc302c371e3",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "simulation-de7fb015c0a3",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-279d58c7499a",
+      "prompt_tokens": 2626,
+      "completion_tokens": 113,
+      "cached_tokens": 0,
+      "usd": "0.00041553"
+    },
+    {
+      "id": "reviewer-32a81c92f553",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-9e25b639292d",
+      "prompt_tokens": 4324,
+      "completion_tokens": 207,
+      "cached_tokens": 0,
+      "usd": "0.00069552"
+    },
+    {
+      "id": "reviewer-a1e2368be1f2",
+      "prompt_tokens": 7076,
+      "completion_tokens": 299,
+      "cached_tokens": 0,
+      "usd": "0.00111672"
+    },
+    {
+      "id": "reviewer-1dea7b87cecc",
+      "prompt_tokens": 12020,
+      "completion_tokens": 382,
+      "cached_tokens": 0,
+      "usd": "0.00182898"
+    },
+    {
+      "id": "reviewer-e204619c61b6",
+      "prompt_tokens": 14698,
+      "completion_tokens": 3311,
+      "cached_tokens": 11776,
+      "usd": "0.0022142052"
+    },
+    {
+      "id": "reviewer-4b96f0dd9841",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-a4ac35d8002c",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-05e830c7b035",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-e3689f70f1ab",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-01d811ecd2cb",
+      "state": "uncertain",
+      "cause": "HTTP 502"
+    },
+    {
+      "id": "reviewer-e9aba114da54",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "writer-8da23fd9c30f",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "writer-014ad5cf0bcc",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "writer-de175b6b5e02",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "writer-333cfcc4a872",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "writer-b206e6ba9493",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "writer-631d43f25f4d",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "research-e13f22509619",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    },
+    {
+      "id": "lean-1cbcad499b48",
+      "state": "uncertain",
+      "cause": "HTTP 522"
+    }
+  ],
+  "rates_usd_per_million": {
+    "uncached_input": ".135",
+    "cached_input": ".0027",
+    "output": ".540"
+  },
+  "pricing_basis": "User-supplied Nube rates; not independently verified billing"
+}

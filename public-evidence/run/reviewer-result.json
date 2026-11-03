@@ -1,0 +1,7 @@
+{
+  "state": "retry_paused",
+  "message": "Transient retry allowance exhausted; all uncertain reservations retained",
+  "cycle": 1,
+  "session_turns": 5,
+  "session_tools": 11
+}

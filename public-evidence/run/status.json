@@ -1,0 +1,45 @@
+{
+  "preflight": {
+    "time": "2026-11-03T11:11:47.112487+00:00",
+    "role": "preflight",
+    "event": "turn_finished",
+    "summary": "PREFLIGHT_OK",
+    "rounds": 2
+  },
+  "coordinator": {
+    "time": "2026-11-03T11:24:50.826690+00:00",
+    "role": "coordinator",
+    "event": "run_checkpointed",
+    "summary": "budget_or_auth_stopped"
+  },
+  "research": {
+    "time": "2026-11-03T11:24:50.409900+00:00",
+    "role": "research",
+    "event": "stopped",
+    "summary": "Run budget cannot cover another pessimistically reserved request"
+  },
+  "lean": {
+    "time": "2026-11-03T11:24:50.824352+00:00",
+    "role": "lean",
+    "event": "stopped",
+    "summary": "Run budget cannot cover another pessimistically reserved request"
+  },
+  "simulation": {
+    "time": "2026-11-03T11:24:48.827396+00:00",
+    "role": "simulation",
+    "event": "stopped",
+    "summary": "Run budget cannot cover another pessimistically reserved request"
+  },
+  "reviewer": {
+    "time": "2026-11-03T11:21:29.748604+00:00",
+    "role": "reviewer",
+    "event": "retry_paused",
+    "summary": "Transient retry allowance exhausted; all uncertain reservations retained"
+  },
+  "writer": {
+    "time": "2026-11-03T11:24:29.012864+00:00",
+    "role": "writer",
+    "event": "retry_paused",
+    "summary": "Transient retry allowance exhausted; all uncertain reservations retained"
+  }
+}

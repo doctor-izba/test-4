@@ -1,0 +1,54 @@
+/bin/bash: line 1: cd: review: No such file or directory
+./.tool-logs/shell-7b788f5e34d3494da516d707dc2850c5.log
+./.tool-logs/shell-df8701a5add64dd9b5b33e456ec257ca.log
+./.tool-logs/shell-53af0f44471b4bbb8a6dc26e4261f8e1.log
+./.tool-logs/shell-021ce5a6a4a74c2293d12687c7f1b10c.log
+./.tool-logs/shell-c988ed60b69946519447d7988706768d.log
+./lean-check/axioms-own.log
+./lean-check/build.log
+./lean-check/axioms.log
+./lean-check/Assignment4Verification.lean
+./lean-check/AxiomAudit.lean
+./lean-check/build-o.log
+./rerun/unit-tests.log
+./rerun/results/corner_slow.csv
+./rerun/results/corner_slow.svg
+./rerun/results/corner_fast.csv
+./rerun/results/approach.csv
+./rerun/results/metrics.json
+./rerun/results/goal.csv
+./rerun/results/approach.svg
+./rerun/results/corner_fast.svg
+./rerun/results/goal.svg
+./rerun/simulate-stderr.log
+./rerun/simulate-stdout.json
+--- sizes ---
+716	.
+4	./.home
+28	./.tool-logs
+4	./.tool-logs/shell-021ce5a6a4a74c2293d12687c7f1b10c.log
+4	./.tool-logs/shell-53af0f44471b4bbb8a6dc26e4261f8e1.log
+8	./.tool-logs/shell-7b788f5e34d3494da516d707dc2850c5.log
+4	./.tool-logs/shell-c988ed60b69946519447d7988706768d.log
+4	./.tool-logs/shell-df8701a5add64dd9b5b33e456ec257ca.log
+56	./lean-check
+24	./lean-check/Assignment4Verification.lean
+4	./lean-check/AxiomAudit.lean
+8	./lean-check/axioms-own.log
+8	./lean-check/axioms.log
+4	./lean-check/build-o.log
+4	./lean-check/build.log
+624	./rerun
+608	./rerun/results
+64	./rerun/results/approach.csv
+12	./rerun/results/approach.svg
+156	./rerun/results/corner_fast.csv
+20	./rerun/results/corner_fast.svg
+256	./rerun/results/corner_slow.csv
+28	./rerun/results/corner_slow.svg
+52	./rerun/results/goal.csv
+8	./rerun/results/goal.svg
+8	./rerun/results/metrics.json
+0	./rerun/simulate-stderr.log
+8	./rerun/simulate-stdout.json
+4	./rerun/unit-tests.log

@@ -1,0 +1,6 @@
+.lake/packages/mathlib/Mathlib/Data/Int/Order/Basic.lean:61:protected theorem mul_pos_iff : 0 < a * b ↔ 0 < a ∧ 0 < b ∨ a < 0 ∧ b < 0 := by
+.lake/packages/mathlib/Mathlib/Data/EReal/Operations.lean:662:lemma mul_pos_iff {a b : EReal} : 0 < a * b ↔ 0 < a ∧ 0 < b ∨ a < 0 ∧ b < 0 := by
+.lake/packages/mathlib/Mathlib/Basic/ENNReal/Operations.lean:220:theorem mul_pos_iff : 0 < a * b ↔ 0 < a ∧ 0 < b :=
+.lake/packages/mathlib/Mathlib/Algebra/Order/GroupWithZero/Basic.lean:49:theorem mul_pos_iff_of_pos_left [PosMulStrictMono α] [PosMulReflectLT α] (h : 0 < a) :
+.lake/packages/mathlib/Mathlib/Algebra/Order/GroupWithZero/Basic.lean:60:theorem mul_pos_iff_of_pos_right [MulPosStrictMono α] [MulPosReflectLT α] (h : 0 < b) :
+.lake/packages/mathlib/Mathlib/Algebra/Order/Ring/Unbundled/Basic.lean:492:theorem mul_pos_iff [ExistsAddOfLE R] [PosMulStrictMono R] [MulPosStrictMono R]

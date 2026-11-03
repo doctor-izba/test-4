@@ -1,0 +1,115 @@
+"""Deterministic free 2-D kinematic surrogate; NOT a CoppeliaSim/MATLAB run."""
+from __future__ import annotations
+import argparse
+import csv
+import json
+import math
+from pathlib import Path
+
+RADIUS, AXLE, HALF_LENGTH, HALF_WIDTH = .0975, .381, .23, .19
+DT, WHEEL_LIMIT = .05, 6.
+
+def wrap(theta):
+    return (theta + math.pi) % (2 * math.pi) - math.pi
+
+def transform(point, pose):
+    x,y=point; px,py,theta=pose; c,s=math.cos(theta),math.sin(theta)
+    return px+c*x-s*y, py+s*x+c*y
+
+def footprint(pose):
+    return [transform(p,pose) for p in [(-HALF_LENGTH,-HALF_WIDTH),(HALF_LENGTH,-HALF_WIDTH),(HALF_LENGTH,HALF_WIDTH),(-HALF_LENGTH,HALF_WIDTH)]]
+
+def cross(a,b):
+    return a[0]*b[1]-a[1]*b[0]
+
+def sub(a,b):
+    return a[0]-b[0],a[1]-b[1]
+
+def point_segment(p,a,b):
+    d=sub(b,a); length=d[0]**2+d[1]**2
+    t=max(0.,min(1.,sum(x*y for x,y in zip(sub(p,a),d))/length)) if length else 0.
+    return math.hypot(p[0]-a[0]-t*d[0],p[1]-a[1]-t*d[1])
+
+def intersects(a,b,c,d):
+    ab,cd=sub(b,a),sub(d,c)
+    values=[cross(ab,sub(c,a)),cross(ab,sub(d,a)),cross(cd,sub(a,c)),cross(cd,sub(b,c))]
+    if values[0]*values[1]<0 and values[2]*values[3]<0:
+        return True
+    return any(abs(v)<1e-12 and point_segment(p,u,w)<1e-12 for v,p,u,w in
+               [(values[0],c,a,b),(values[1],d,a,b),(values[2],a,c,d),(values[3],b,c,d)])
+
+def contains(point,polygon):
+    signs=[cross(sub(b,a),sub(point,a)) for a,b in zip(polygon,polygon[1:]+polygon[:1])]
+    return all(v>=-1e-12 for v in signs) or all(v<=1e-12 for v in signs)
+
+def polygon_distance(left,right):
+    edges=lambda p:list(zip(p,p[1:]+p[:1]))
+    if contains(left[0],right) or contains(right[0],left):
+        return 0.
+    minimum=math.inf
+    for a,b in edges(left):
+        for c,d in edges(right):
+            if intersects(a,b,c,d):
+                return 0.
+            minimum=min(minimum,point_segment(a,c,d),point_segment(b,c,d),point_segment(c,a,b),point_segment(d,a,b))
+    return minimum
+
+def rectangle(x0,y0,x1,y1):
+    return [(x0,y0),(x1,y0),(x1,y1),(x0,y1)]
+
+def ray_range(origin,angle,walls,maximum=3.):
+    ray=(math.cos(angle),math.sin(angle)); best=maximum; detected=False
+    for wall in walls:
+        for a,b in zip(wall,wall[1:]+wall[:1]):
+            edge=sub(b,a); denominator=cross(ray,edge)
+            if abs(denominator)<1e-12:
+                continue
+            delta=sub(a,origin); distance=cross(delta,edge)/denominator; t=cross(delta,ray)/denominator
+            if 0<=distance<=best and 0<=t<=1:
+                best,detected=distance,True
+    return best if detected else None
+
+def sensors(pose,walls):
+    return {
+        'front':ray_range(transform((HALF_LENGTH,0),pose),pose[2],walls),
+        'left_front':ray_range(transform((.16,HALF_WIDTH),pose),pose[2]+math.pi/2,walls),
+        'left_back':ray_range(transform((-.16,HALF_WIDTH),pose),pose[2]+math.pi/2,walls),
+    }
+
+def wheel_command(v,omega):
+    left,right=(v-AXLE*omega/2)/RADIUS,(v+AXLE*omega/2)/RADIUS
+    scale=max(1.,abs(left)/WHEEL_LIMIT,abs(right)/WHEEL_LIMIT)
+    return left/scale,right/scale
+
+def protect(v,omega,front,threshold=.12):
+    return (0. if front is not None and front<=threshold else v),omega
+
+def lost_timer(previous,detected,dt):
+    return 0. if detected else previous+dt
+
+def turn_space_clear(readings,margin=.02):
+    """Conservative stationary full-circle bound for these axis-aligned walls.
+
+    Valid only when both observed walls are perpendicular to current sensor rays.
+    A full swept-disc calculation from actual polygons is logged independently.
+    """
+    radius=math.hypot(HALF_LENGTH,HALF_WIDTH)
+    front=readings['front']; side=readings['left_front']
+    return (front is not None and side is not None and
+            front+HALF_LENGTH>=radius+margin and side+HALF_WIDTH>=radius+margin)
+
+def integrate(pose,left_delta,right_delta):
+    ds=RADIUS*(left_delta+right_delta)/2
+    dtheta=RADIUS*(right_delta-left_delta)/AXLE
+    middle=pose[2]+dtheta/2
+    return pose[0]+ds*math.cos(middle),pose[1]+ds*math.sin(middle),wrap(pose[2]+dtheta)
+
+class Policy:
+    """Pure feedback input: odometry, proximity, elapsed time. No truth pose."""
+    def __init__(self,test,speed):
+        self.test,self.speed=test,speed
+        self.state='rotate_to_goal' if test=='goal' else 'approach' if test=='approach' else 'follow_first'
+        self.hold=0.; self.lost=0.; self.turn_origin=None; self.second_origin=None
+        self.finished=False
+
+    def step(self,odom,readings,dt):

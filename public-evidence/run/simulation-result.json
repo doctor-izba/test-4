@@ -1,0 +1,8 @@
+{
+  "state": "stopped",
+  "error_type": "BudgetStopped",
+  "message": "Run budget cannot cover another pessimistically reserved request",
+  "cycle": 2,
+  "session_turns": 6,
+  "session_tools": 10
+}

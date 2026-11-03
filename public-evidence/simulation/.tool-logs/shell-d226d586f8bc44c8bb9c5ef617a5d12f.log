@@ -1,0 +1,60 @@
+/home/runner/work/test-4/test-4/simulation
+total 68
+drwxr-xr-x  8 runner runner  4096 Nov  3 11:11 .
+drwxr-xr-x 15 runner runner  4096 Nov  3 11:11 ..
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:11 .home
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:11 .tool-logs
+-rw-r--r--  1 runner runner  2656 Nov  3 11:08 ALTERNATIVES.md
+-rw-r--r--  1 runner runner  3185 Nov  3 11:08 README.md
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:08 baseline-cloud
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:08 baseline_frozen
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:08 baseline_second_wall
+-rw-r--r--  1 runner runner  3822 Nov  3 11:08 cloud_results.md
+-rw-r--r--  1 runner runner   836 Nov  3 11:08 reference_checks.m
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:08 results
+-rw-r--r--  1 runner runner 14532 Nov  3 11:08 simulate.py
+-rw-r--r--  1 runner runner  3430 Nov  3 11:08 test_simulation.py
+---
+./.tool-logs/shell-d226d586f8bc44c8bb9c5ef617a5d12f.log
+./ALTERNATIVES.md
+./README.md
+./baseline-cloud/approach.csv
+./baseline-cloud/approach.svg
+./baseline-cloud/corner_fast.csv
+./baseline-cloud/corner_fast.svg
+./baseline-cloud/corner_slow.csv
+./baseline-cloud/corner_slow.svg
+./baseline-cloud/goal.csv
+./baseline-cloud/goal.svg
+./baseline-cloud/metrics.json
+./baseline_frozen/approach.csv
+./baseline_frozen/approach.svg
+./baseline_frozen/corner_fast.csv
+./baseline_frozen/corner_fast.svg
+./baseline_frozen/corner_slow.csv
+./baseline_frozen/corner_slow.svg
+./baseline_frozen/goal.csv
+./baseline_frozen/goal.svg
+./baseline_frozen/metrics.json
+./baseline_second_wall/approach.csv
+./baseline_second_wall/approach.svg
+./baseline_second_wall/corner_fast.csv
+./baseline_second_wall/corner_fast.svg
+./baseline_second_wall/corner_slow.csv
+./baseline_second_wall/corner_slow.svg
+./baseline_second_wall/goal.csv
+./baseline_second_wall/goal.svg
+./baseline_second_wall/metrics.json
+./cloud_results.md
+./reference_checks.m
+./results/approach.csv
+./results/approach.svg
+./results/corner_fast.csv
+./results/corner_fast.svg
+./results/corner_slow.csv
+./results/corner_slow.svg
+./results/goal.csv
+./results/goal.svg
+./results/metrics.json
+./simulate.py
+./test_simulation.py

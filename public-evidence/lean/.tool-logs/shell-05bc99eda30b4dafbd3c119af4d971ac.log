@@ -1,0 +1,60 @@
+total 76
+drwxr-xr-x 15 runner runner 4096 Nov  3 11:11 .
+drwxr-xr-x  3 runner runner 4096 Nov  3 11:08 ..
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:08 .cloud-budget
+drwxr-xr-x  7 runner runner 4096 Nov  3 11:08 .git
+drwxr-xr-x  3 runner runner 4096 Nov  3 11:08 .github
+-rw-r--r--  1 runner runner   99 Nov  3 11:08 .gitignore
+-rw-r--r--  1 runner runner 5594 Nov  3 11:08 README.md
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:08 cloud
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:08 harness
+drwxr-xr-x  5 runner runner 4096 Nov  3 11:12 lean
+drwxr-xr-x  3 runner runner 4096 Nov  3 11:12 output
+drwxr-xr-x  4 runner runner 4096 Nov  3 11:08 provenance
+drwxr-xr-x  3 runner runner 4096 Nov  3 11:08 reports
+-rw-r--r--  1 runner runner   36 Nov  3 11:08 requirements.txt
+drwxr-xr-x  6 runner runner 4096 Nov  3 11:12 research
+drwxr-xr-x  6 runner runner 4096 Nov  3 11:11 review
+drwxr-xr-x  8 runner runner 4096 Nov  3 11:11 simulation
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:08 tasks
+.
+./review
+./review/lean-check
+./review/rerun
+./cloud
+./lean
+./tasks
+./harness
+./provenance
+./provenance/run-41598425296
+./provenance/run-41602972991
+./simulation
+./simulation/baseline_second_wall
+./simulation/baseline_frozen
+./simulation/results
+./simulation/baseline-cloud
+./output
+./output/sessions
+./research
+./research/notes
+./research/raw
+./reports
+./reports/rerun
+./cloud/budget_claim.py
+./cloud/checkpoint_publisher.py
+./cloud/test_telegram_monitor.py
+./cloud/render_report.py
+./cloud/collect_evidence.py
+./cloud/team_supervisor.py
+./cloud/telegram_monitor.py
+./cloud/test_checkpoints.py
+./cloud/publish_results.py
+./harness/sse.py
+./harness/sessions.py
+./harness/run.py
+./harness/tools.py
+./harness/engine.py
+./harness/test_harness.py
+./harness/budget.py
+./simulation/simulate.py
+./simulation/test_simulation.py

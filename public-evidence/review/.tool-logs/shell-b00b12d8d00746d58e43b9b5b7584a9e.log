@@ -1,0 +1,28 @@
+/bin/bash: line 1: cd: review: No such file or directory
+=== headers ===
+-- rerun/results/approach.csv
+time_s,x_gt_m,y_gt_m,theta_gt_rad,x_odom_m,y_odom_m,theta_odom_rad,wheel_left_angle_rad,wheel_right_angle_rad,wheel_left_measured_rad_s,wheel_right_measured_rad_s,wheel_left_command_rad_s,wheel_right_command_rad_s,front_range_m,left_front_range_m,left_back_range_m,state,footprint_clearance_m,collision
+0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.435897435897436,1.435897435897436,1.435897435897436,1.435897435897436,1.5,,,approach,1.5,0
+-- rerun/results/corner_fast.csv
+time_s,x_gt_m,y_gt_m,theta_gt_rad,x_odom_m,y_odom_m,theta_odom_rad,wheel_left_angle_rad,wheel_right_angle_rad,wheel_left_measured_rad_s,wheel_right_measured_rad_s,wheel_left_command_rad_s,wheel_right_command_rad_s,front_range_m,left_front_range_m,left_back_range_m,state,footprint_clearance_m,collision
+0.0,0.0,0.31,0.0,0.0,0.31,0.0,0.0,0.0,1.4358974358974357,1.4358974358974363,1.4358974358974357,1.4358974358974363,2.77,0.30000000000000004,0.30000000000000004,follow_first,0.30000000000000004,0
+-- rerun/results/corner_slow.csv
+time_s,x_gt_m,y_gt_m,theta_gt_rad,x_odom_m,y_odom_m,theta_odom_rad,wheel_left_angle_rad,wheel_right_angle_rad,wheel_left_measured_rad_s,wheel_right_measured_rad_s,wheel_left_command_rad_s,wheel_right_command_rad_s,front_range_m,left_front_range_m,left_back_range_m,state,footprint_clearance_m,collision
+0.0,0.0,0.31,0.0,0.0,0.31,0.0,0.0,0.0,0.8205128205128204,0.8205128205128206,0.8205128205128204,0.8205128205128206,2.77,0.30000000000000004,0.30000000000000004,follow_first,0.30000000000000004,0
+-- rerun/results/goal.csv
+time_s,x_gt_m,y_gt_m,theta_gt_rad,x_odom_m,y_odom_m,theta_odom_rad,wheel_left_angle_rad,wheel_right_angle_rad,wheel_left_measured_rad_s,wheel_right_measured_rad_s,wheel_left_command_rad_s,wheel_right_command_rad_s,front_range_m,left_front_range_m,left_back_range_m,state,footprint_clearance_m,collision
+0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,-1.563076923076923,1.563076923076923,-1.563076923076923,1.563076923076923,,,,rotate_to_goal,,0
+
+=== hashes ===
+384b2c4a010c1788eceac22b42d5cf73867279e8bcb179fa92c4e6116f034c9c  ../simulation/simulate.py
+3932166fa3e9d16a0a07a62cf3ffd3b44716dfffdb1abf2ac56b49f4693df876  ../simulation/test_simulation.py
+4c8756af1a450f775683c3606d40e2427b9481ce420e87934a172415ae24f016  rerun/results/metrics.json
+
+=== csv rows ===
+   294 rerun/results/approach.csv
+   560 rerun/results/corner_fast.csv
+   916 rerun/results/corner_slow.csv
+   214 rerun/results/goal.csv
+  1984 total
+
+=== logs tail ===

@@ -1,0 +1,75 @@
+lean:
+total 140
+drwxr-xr-x  5 runner runner  4096 Nov  3 11:12 .
+drwxr-xr-x 15 runner runner  4096 Nov  3 11:11 ..
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:11 .home
+drwxr-xr-x  5 runner runner  4096 Nov  3 11:12 .lake
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:14 .tool-logs
+-rw-r--r--  1 runner runner 22347 Nov  3 11:08 Assignment4Verification.lean
+-rw-r--r--  1 runner runner  3122 Nov  3 11:08 AxiomAudit.lean
+-rw-r--r--  1 runner runner  2075 Nov  3 11:08 README.md
+-rw-r--r--  1 runner runner   880 Nov  3 11:08 RefProbe.lean
+-rw-r--r--  1 runner runner 10227 Nov  3 11:08 Scratch.lean
+-rw-r--r--  1 runner runner  4353 Nov  3 11:08 VERIFICATION-NOTES.md
+-rw-r--r--  1 runner runner  6209 Nov  3 11:12 axioms-cycle1.log
+-rw-r--r--  1 runner runner  6209 Nov  3 11:08 axioms.log
+-rw-r--r--  1 runner runner  1851 Nov  3 11:12 build-cycle1.log
+-rw-r--r--  1 runner runner  1851 Nov  3 11:08 build.log
+-rw-r--r--  1 runner runner  2234 Nov  3 11:08 check_local.py
+-rw-r--r--  1 runner runner  6209 Nov  3 11:08 final-axioms.log
+-rw-r--r--  1 runner runner  1847 Nov  3 11:08 final-build.log
+-rw-r--r--  1 runner runner  3146 Nov  3 11:08 lake-manifest.json
+-rw-r--r--  1 runner runner   251 Nov  3 11:08 lakefile.toml
+-rw-r--r--  1 runner runner    25 Nov  3 11:08 lean-toolchain
+-rw-r--r--  1 runner runner  1851 Nov  3 11:08 local-build.log
+-rw-r--r--  1 runner runner   400 Nov  3 11:08 local-verification.json
+-rw-r--r--  1 runner runner  1847 Nov  3 11:08 verification.log
+
+reports:
+total 24
+drwxr-xr-x  3 runner runner 4096 Nov  3 11:08 .
+drwxr-xr-x 15 runner runner 4096 Nov  3 11:11 ..
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:08 rerun
+-rw-r--r--  1 runner runner    0 Nov  3 11:08 rerun-stderr.log
+-rw-r--r--  1 runner runner 4217 Nov  3 11:08 rerun-stdout.json
+-rw-r--r--  1 runner runner 1283 Nov  3 11:08 unit-tests.log
+
+research:
+total 28
+drwxr-xr-x  6 runner runner 4096 Nov  3 11:12 .
+drwxr-xr-x 15 runner runner 4096 Nov  3 11:11 ..
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:11 .home
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:14 .tool-logs
+-rw-r--r--  1 runner runner 2194 Nov  3 11:12 handoff.md
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:08 notes
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:13 raw
+
+review:
+total 24
+drwxr-xr-x  6 runner runner 4096 Nov  3 11:11 .
+drwxr-xr-x 15 runner runner 4096 Nov  3 11:11 ..
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:11 .home
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:18 .tool-logs
+drwxr-xr-x  2 runner runner 4096 Nov  3 11:08 lean-check
+drwxr-xr-x  3 runner runner 4096 Nov  3 11:08 rerun
+
+simulation:
+total 72
+drwxr-xr-x  8 runner runner  4096 Nov  3 11:14 .
+drwxr-xr-x 15 runner runner  4096 Nov  3 11:11 ..
+drwxr-xr-x  4 runner runner  4096 Nov  3 11:12 .home
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:12 .tool-logs
+-rw-r--r--  1 runner runner  2656 Nov  3 11:08 ALTERNATIVES.md
+-rw-r--r--  1 runner runner  3185 Nov  3 11:08 README.md
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:08 baseline-cloud
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:12 baseline_frozen
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:08 baseline_second_wall
+-rw-r--r--  1 runner runner  3822 Nov  3 11:08 cloud_results.md
+-rw-r--r--  1 runner runner  3176 Nov  3 11:14 handoff.md
+-rw-r--r--  1 runner runner   836 Nov  3 11:08 reference_checks.m
+drwxr-xr-x  2 runner runner  4096 Nov  3 11:08 results
+-rw-r--r--  1 runner runner 14532 Nov  3 11:08 simulate.py
+-rw-r--r--  1 runner runner  3430 Nov  3 11:08 test_simulation.py
+=== handoffs ===
+./simulation/handoff.md
+./research/handoff.md

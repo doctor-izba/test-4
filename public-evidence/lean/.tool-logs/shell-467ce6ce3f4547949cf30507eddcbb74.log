@@ -1,0 +1,27 @@
+⚠ [1963/1964] Built Assignment4Verification (2.9s)
+Build completed successfully (1964 jobs).
+---
+AUDIT_EXIT=0
+67 axioms-cycle1.log
+'Assignment4.vBody_of_wl_wr' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wBody_of_wl_wr' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wl_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wr_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wl_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wr_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.curvature_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.front_clearance_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.front_range_for_clearance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.side_clearance_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wrap_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wrap_abs_le_pi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wrap_neg_pi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.wrap_pi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.heading_command_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.rot_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.rot_quarter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.rot_preserves_squared_norm' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.protect_front_nonforward' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Assignment4.protect_invalid' depends on axioms: [propext, Classical.choice, Quot.sound]
+...
+67
