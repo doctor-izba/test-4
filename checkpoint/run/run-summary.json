@@ -1,0 +1,45 @@
+{
+  "time": "2026-11-03T08:30:26.028258+00:00",
+  "version": 2,
+  "cycle": 1,
+  "model": "DeepSeek-V4.1-Flash",
+  "roles": {
+    "lean": {
+      "state": "yielded",
+      "steps": 12,
+      "tool_calls": 9,
+      "final_text": "",
+      "cycle": 1,
+      "session_turns": 12,
+      "session_tools": 17
+    },
+    "simulation": {
+      "state": "stopped",
+      "error_type": "BudgetStopped",
+      "message": "Provider refused request: HTTP 524",
+      "cycle": 1,
+      "session_turns": 5,
+      "session_tools": 10
+    },
+    "research": {
+      "state": "yielded",
+      "steps": 12,
+      "tool_calls": 28,
+      "final_text": "",
+      "cycle": 1,
+      "session_turns": 12,
+      "session_tools": 28
+    },
+    "reviewer": {
+      "state": "skipped",
+      "reason": "Global deadline/budget/auth stop"
+    },
+    "writer": {
+      "state": "skipped",
+      "reason": "Global deadline/budget/auth stop"
+    }
+  },
+  "state": "budget_or_auth_stopped",
+  "stop_reason": "Uncertain request outcome: HTTP 524",
+  "note": "Saved artifacts remain reviewable; no unsupported claim that the assignment is complete."
+}

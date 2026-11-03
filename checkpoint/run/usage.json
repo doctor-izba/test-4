@@ -1,14 +1,14 @@
 {
   "limit_usd": "3.52",
-  "confirmed_usd": "0.0484349328",
+  "confirmed_usd": "0.0582089328",
   "reserved_usd": "0.22862466",
   "reservations": {
     "simulation-61165721662a": "0.22862466"
   },
   "reservation_states": {
-    "simulation-61165721662a": "active"
+    "simulation-61165721662a": "uncertain"
   },
-  "stop_reason": null,
+  "stop_reason": "Uncertain request outcome: HTTP 524",
   "calls": [
     {
       "id": "preflight-01bc66e94463",
@@ -205,6 +205,32 @@
       "completion_tokens": 11042,
       "cached_tokens": 0,
       "usd": "0.008600985"
+    },
+    {
+      "id": "research-27fe2d1dddee",
+      "prompt_tokens": 27372,
+      "completion_tokens": 6488,
+      "cached_tokens": 0,
+      "usd": "0.00719874"
+    },
+    {
+      "id": "research-9cd59c8fe85b",
+      "prompt_tokens": 33891,
+      "completion_tokens": 663,
+      "cached_tokens": 27136,
+      "usd": "0.0013432122"
+    },
+    {
+      "id": "simulation-61165721662a",
+      "state": "uncertain",
+      "cause": "HTTP 524"
+    },
+    {
+      "id": "research-2f3ce466c1ba",
+      "prompt_tokens": 40349,
+      "completion_tokens": 442,
+      "cached_tokens": 33664,
+      "usd": "0.0012320478"
     }
   ],
   "rates_usd_per_million": {
