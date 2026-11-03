@@ -15,7 +15,6 @@ jobs:
       ELAN_HOME: /home/runner/.elan
       LEAN_NUM_THREADS: '2'
       PYTHONDONTWRITEBYTECODE: '1'
-      NUBE_TRANSPORT: json
     steps:
       - name: Record start of the six-hour job window
         run: python -c "import os;from datetime import datetime,timezone;open(os.environ['GITHUB_ENV'],'a').write('TEAM_STARTED_UTC='+datetime.now(timezone.utc).isoformat()+'\n')"
@@ -59,6 +58,7 @@ jobs:
         id: agents
         env:
           NUBE_API_KEY: ${{ secrets.NUBE_API_KEY }}
+          NUBE_TRANSPORT: json
           GITHUB_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
