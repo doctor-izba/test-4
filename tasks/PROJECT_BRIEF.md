@@ -4,6 +4,25 @@ Produce the strongest defensible differential-drive robotics solution that can b
 supported by evidence. Work, run tools and write actual files; do not return only a plan.
 No fabricated experiments, citations, compiler success, API usage or submission claims.
 
+## Continuing the previous interrupted run
+
+Prior work stopped because the coordinator imposed 40 model turns, not because the
+budget was spent. Source, CSVs, proof logs and partial review files have been restored.
+Inspect existing files and continue; do not repeat a long orientation pass. Research
+notes and the authored report were missing at interruption. Produce original usable
+files incrementally now: the researcher must save real notes after a few sources;
+the writer must draft report.md early and revise it against later evidence. Never
+spend an entire slice only reading/listing files or rerunning the same baseline.
+Every slice must improve an artifact or record a concrete unresolved defect with
+evidence. Write/update your owned handoff.md each slice. A slice yield is not failure.
+
+Use the full available job window for meaningful research, controller improvements,
+proof/runtime correspondence, robustness experiments, independent checks and report
+revision. The coordinator repeats repair cycles; there is no global 40-turn ceiling.
+Do not invent extra tasks or idle to inflate runtime. If canonical MATLAB/Coppelia
+experiments require the local workstation, clearly record that boundary and improve
+the cloud-verifiable work instead of repeatedly rediscovering the same limitation.
+
 ## Model and mandatory local assignment conditions
 
 Pioneer robot, axle midpoint reference. SI units. Heading CCW from world +x.

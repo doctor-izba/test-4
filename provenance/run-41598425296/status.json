@@ -1,0 +1,48 @@
+{
+  "preflight": {
+    "time": "2026-11-03T07:48:08.180381+00:00",
+    "role": "preflight",
+    "event": "finished",
+    "summary": "PREFLIGHT_OK",
+    "steps": 2,
+    "tool_calls": 1
+  },
+  "research": {
+    "time": "2026-11-03T07:51:40.046196+00:00",
+    "role": "research",
+    "event": "step_limit",
+    "steps": 40
+  },
+  "lean": {
+    "time": "2026-11-03T07:55:35.226666+00:00",
+    "role": "lean",
+    "event": "step_limit",
+    "steps": 40
+  },
+  "simulation": {
+    "time": "2026-11-03T07:50:12.638929+00:00",
+    "role": "simulation",
+    "event": "finished",
+    "summary": "",
+    "steps": 6,
+    "tool_calls": 11
+  },
+  "reviewer": {
+    "time": "2026-11-03T08:00:17.325587+00:00",
+    "role": "reviewer",
+    "event": "step_limit",
+    "steps": 40
+  },
+  "writer": {
+    "time": "2026-11-03T08:03:47.003143+00:00",
+    "role": "writer",
+    "event": "step_limit",
+    "steps": 40
+  },
+  "coordinator": {
+    "time": "2026-11-03T08:03:47.003883+00:00",
+    "role": "coordinator",
+    "event": "run_finished",
+    "summary": "Review generated files, compiler evidence, and usage ledger"
+  }
+}

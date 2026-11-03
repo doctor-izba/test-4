@@ -13,8 +13,9 @@ not a claim that an assignment or its proofs have already passed.
 5. Writer: author the complete report and explanation, using actual accepted evidence.
 
 DeepSeek-V4.1-Flash is accessed through the user's Nube API. Model inference is
-paid, with a conservative single-authorized-run budget of USD 3.70, below the user's
-USD 4 ceiling. GitHub-hosted standard compute in this public repository is free;
+paid. The resumed run has USD 3.52 available after the first run's USD 0.170083746,
+keeping tracked inference plus small capability probes below the user's USD 4
+ceiling. GitHub-hosted standard compute in this public repository is free;
 no GPU, paid runner, external VM, or paid simulator is requested. API pricing is
 user-supplied: USD 0.135/M uncached input, 0.0027/M cached input, 0.540/M output.
 Usage accounting and uncertainty must be reported. This does not promise unlimited
@@ -28,6 +29,22 @@ run from starting silently, including reruns of a used authorization. The secret
 `NUBE_API_KEY` is stored in Actions Secrets, never in this repository or agent chats.
 The budget and sandbox tests execute before inference. Worker progress appears in
 the live Actions log; outputs and diagnostics are collected even when a worker fails.
+
+The workflow now allows the full six-hour GitHub job window. Agent work continues
+until five minutes before the job deadline, reserving cleanup time. There is no
+40-turn role ceiling: finite scheduling slices yield persisted sessions, followed
+by review/writing and constructive repair cycles. Provider context/output limits
+replace the earlier arbitrary 200 KB / 8192-token limits. The accepted request
+settings are max_tokens=393216 and reasoning_effort=max for DeepSeek-V4.1-Flash.
+
+Transient API failures receive bounded backoff/retry with a separate reservation
+for every uncertain attempt. Authentication/accounting failures remain fail-closed.
+A trusted supervisor can restart a crashed worker process from saved sessions when
+there is no unresolved monetary reservation. An independent broker periodically
+publishes authored-work/accounting snapshots to progress/run-ID and updates Telegram
+with real per-role states. Raw books, raw chats and credentials are not published.
+GitHub outage/hard termination cannot be eliminated: earlier snapshots survive,
+and a new paid authorization requires reconciliation rather than blind duplication.
 
 The first three agents own distinct directories. Their commands run in a Linux
 bubblewrap sandbox with a sanitized environment and no network. Research downloads
@@ -43,10 +60,10 @@ paid model or persistent local process is needed. It uses `TELEGRAM_BOT_TOKEN` a
 the private chat using a unique START link, then installs the secrets and dispatches
 the monitor. Do not paste the token into issues, commits, logs or public chat.
 
-For the current research run, the monitor sees workflow stages, not each worker's
-internal live messages. Detailed live worker actions remain in the Actions log.
-Final per-worker states and token cost are included when the evidence branch exists.
-The monitor does not restart/cancel agents or bypass the repository budget guard.
+The original optional monitor sees workflow stages; the resumed team's independent
+checkpoint broker additionally reports live per-role events and spending. Detailed
+worker actions remain in the Actions log. Neither Telegram component can bypass
+the spending guard or itself consume DeepSeek tokens.
 
 ## What the free simulator means
 

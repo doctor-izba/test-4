@@ -1,6 +1,11 @@
 {
-  "state": "claimed_before_inference",
-  "run_id": "41598425296",
-  "maximum_usd": 3.7,
-  "note": "This authorization cannot be automatically reused, even if a run fails."
+  "schema": 2,
+  "state": "authorized",
+  "authorization_id": "resume-six-hour-team-2026-11-03",
+  "maximum_usd": "3.52",
+  "prior_confirmed_usd": "0.1700837460",
+  "prior_reserved_usd": "0",
+  "previous_run_id": "41598425296",
+  "lifetime_target_usd": "3.70",
+  "note": "User explicitly requested continuation for the six-hour GitHub job window. Prior expense retained; unused renewed authorization is claimed atomically. Local probes remain below the USD0.30 margin to the USD4 ceiling."
 }

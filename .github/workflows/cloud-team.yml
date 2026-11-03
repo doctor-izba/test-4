@@ -10,12 +10,14 @@ jobs:
   team:
     if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 220
+    timeout-minutes: 360
     env:
       ELAN_HOME: /home/runner/.elan
       LEAN_NUM_THREADS: '2'
       PYTHONDONTWRITEBYTECODE: '1'
     steps:
+      - name: Record start of the six-hour job window
+        run: python -c "import os;from datetime import datetime,timezone;open(os.environ['GITHUB_ENV'],'a').write('TEAM_STARTED_UTC='+datetime.now(timezone.utc).isoformat()+'\n')"
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
@@ -48,7 +50,7 @@ jobs:
         run: |
           mkdir -p review research reports output
           python -c "import sys;sys.path.insert(0,'harness');from tools import Tools;r=Tools('.','review').shell('printf SANDBOX_OK');print(r);assert r.get('exit_code')==0 and 'SANDBOX_OK' in r['output']"
-      - name: Claim one-shot USD3.70 repository authorization
+      - name: Claim resumed budget with prior spending retained
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python cloud/budget_claim.py
@@ -56,14 +58,19 @@ jobs:
         id: agents
         env:
           NUBE_API_KEY: ${{ secrets.NUBE_API_KEY }}
-        run: python harness/run.py --root . --budget 3.70 --minutes 170 --steps 40 --reasoning high
+          GITHUB_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python cloud/team_supervisor.py
       - name: Render authored report if produced
         if: ${{ always() && steps.agents.outcome != 'skipped' }}
+        timeout-minutes: 1
         run: |
           if test -f reports/report.md; then python cloud/render_report.py; else echo 'No authored report exists; see worker diagnostics.'; fi
       - name: Record final proof build without hiding failures
         if: ${{ always() && steps.agents.outcome != 'skipped' }}
         continue-on-error: true
+        timeout-minutes: 2
         working-directory: lean
         run: |
           set -o pipefail

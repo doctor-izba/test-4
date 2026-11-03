@@ -17,7 +17,7 @@ for directory in ['lean', 'simulation', 'review', 'reports', 'research/notes']:
         relative = path.relative_to(root)
         if path.is_symlink() or not path.is_file() or any(part in ['.lake', '.home', '__pycache__', 'raw', '.git'] for part in relative.parts):
             continue
-        if path.suffix.lower() not in allowed or path.stat().st_size > 8_000_000:
+        if (path.suffix.lower() not in allowed and path.name != 'lean-toolchain') or path.stat().st_size > 8_000_000:
             continue
         if path.suffix.lower() == '.pdf' and directory != 'reports':
             continue

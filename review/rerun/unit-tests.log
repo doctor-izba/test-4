@@ -1,0 +1,14 @@
+test_counterclockwise_transform_rejects_wrong_sign (simulation.test_simulation.GeometryTests.test_counterclockwise_transform_rejects_wrong_sign) ... ok
+test_intersection_and_containment_have_zero_distance (simulation.test_simulation.GeometryTests.test_intersection_and_containment_have_zero_distance) ... ok
+test_ray_detection_and_no_detection (simulation.test_simulation.GeometryTests.test_ray_detection_and_no_detection) ... ok
+test_common_wheel_limit_and_ratio (simulation.test_simulation.PolicyTests.test_common_wheel_limit_and_ratio) ... ok
+test_front_gate_all_behavior_outputs_and_threshold (simulation.test_simulation.PolicyTests.test_front_gate_all_behavior_outputs_and_threshold) ... ok
+test_midpoint_odometry_measured_increment (simulation.test_simulation.PolicyTests.test_midpoint_odometry_measured_increment) ... ok
+test_swept_circle_bound_refuses_narrow_turn (simulation.test_simulation.PolicyTests.test_swept_circle_bound_refuses_narrow_turn) ... ok
+test_timer_detects_frozen_mutant_and_bounded_fallback (simulation.test_simulation.PolicyTests.test_timer_detects_frozen_mutant_and_bounded_fallback) ... ok
+test_wrap_endpoint_and_range_rejects_atan_endpoint_mutant (simulation.test_simulation.PolicyTests.test_wrap_endpoint_and_range_rejects_atan_endpoint_mutant) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+OK

@@ -10,11 +10,13 @@ import subprocess
 import sys
 import urllib.request
 import urllib.parse
+import time
+import uuid
 
 SCHEMAS = [
     {"type": "function", "function": {"name": "read_file", "description": "Read a repository UTF-8 text file (bounded). Paths are relative to repository root.", "parameters": {"type": "object", "properties": {"path": {"type": "string"}, "offset": {"type": "integer"}, "limit": {"type": "integer"}}, "required": ["path"]}}},
     {"type": "function", "function": {"name": "write_file", "description": "Write a UTF-8 file in your owned directory. Paths are relative to repository root.", "parameters": {"type": "object", "properties": {"path": {"type": "string"}, "content": {"type": "string"}}, "required": ["path", "content"]}}},
-    {"type": "function", "function": {"name": "shell", "description": "Run bash in your owned directory. Repository and OS are read-only except your directory; network is disabled. Commands are limited to 180 seconds. Dependencies are preinstalled. Do not run other API agents, inspect processes/secrets, or attempt privilege escalation.", "parameters": {"type": "object", "properties": {"command": {"type": "string"}, "timeout": {"type": "integer"}}, "required": ["command"]}}},
+    {"type": "function", "function": {"name": "shell", "description": "Run bash in your owned directory. Repository and OS are read-only except your directory; network is disabled. Default timeout 900 seconds; request a larger timeout when needed, bounded only by the remaining job deadline. Full stdout is saved to an owned log file; the response contains a bounded tail. Dependencies are preinstalled. Do not run other API agents, inspect processes/secrets, or attempt privilege escalation.", "parameters": {"type": "object", "properties": {"command": {"type": "string"}, "timeout": {"type": "integer"}}, "required": ["command"]}}},
     {"type": "function", "function": {"name": "fetch_url", "description": "Download a public HTTPS source to your owned directory. No cookies, authentication, access-control bypass or paid APIs. Returns HTTP status, bytes, SHA256 and text preview when applicable.", "parameters": {"type": "object", "properties": {"url": {"type": "string"}, "path": {"type": "string"}}, "required": ["url", "path"]}}},
 ]
 
@@ -42,12 +44,13 @@ class CheckedRedirect(urllib.request.HTTPRedirectHandler):
 
 
 class Tools:
-    def __init__(self, root, owned, redact=lambda value: value, require_sandbox=True):
+    def __init__(self, root, owned, redact=lambda value: value, require_sandbox=True, deadline=None):
         self.root = Path(root).resolve()
         self.owned = self.resolve(owned)
         self.owned.mkdir(parents=True, exist_ok=True)
         self.redact = redact
         self.require_sandbox = require_sandbox
+        self.deadline = deadline
 
     def resolve(self, path):
         candidate = (self.root / path).resolve()
@@ -62,11 +65,15 @@ class Tools:
         return candidate
 
     def call(self, name, args):
+        if self.deadline is not None and time.monotonic() >= self.deadline:
+            return json.dumps({"error": "Job deadline reached; tool not started"})
         try:
             result = getattr(self, name)(**args) if name in {"read_file", "write_file", "shell", "fetch_url"} else {"error": "Unknown tool"}
         except Exception as error:
             result = {"error": type(error).__name__ + ": " + str(error)}
-        return self.redact(json.dumps(result, ensure_ascii=False))[:24000]
+        # Each individual tool produces a bounded content field. Do not truncate
+        # serialized JSON here: that would produce malformed tool results.
+        return self.redact(json.dumps(result, ensure_ascii=False))
 
     def read_file(self, path, offset=0, limit=16000):
         target = self.resolve(path)
@@ -84,10 +91,13 @@ class Tools:
         target.write_text(self.redact(content), encoding="utf-8")
         return {"written": path, "characters": len(content)}
 
-    def shell(self, command, timeout=90):
-        timeout = max(1, min(int(timeout), 180))
-        if len(command) > 20000:
-            raise ValueError("Command is too long")
+    def shell(self, command, timeout=900):
+        timeout = max(1, int(timeout))
+        if self.deadline is not None:
+            remaining = self.deadline - time.monotonic()
+            if remaining <= 0:
+                raise RuntimeError("Job deadline reached; shell not started")
+            timeout = min(timeout, max(.01, remaining))
         # Defense in depth; OS namespace isolation enforces filesystem/network rules.
         if re.search(r"(/proc|/sys|sudo|nsenter|NUBE_API_KEY|GITHUB_TOKEN|GH_TOKEN|/dev/mem|harness/run\.py)", command, re.I):
             raise ValueError("Process/credential/privilege operations are not permitted")
@@ -107,15 +117,49 @@ class Tools:
         else:
             # Unit tests only. Production caller never opts out.
             argv = [shutil.which("bash") or "bash", "--noprofile", "--norc", "-c", command]
-        try:
-            run = subprocess.run(argv, cwd=self.owned, env=env, text=True, errors="replace", stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT, timeout=timeout)
-            return {"exit_code": run.returncode, "output": self.redact(run.stdout)[-20000:]}
-        except subprocess.TimeoutExpired as error:
-            raw = error.stdout or b""
-            if isinstance(raw, bytes):
-                raw = raw.decode(errors="replace")
-            return {"timeout": timeout, "output": self.redact(raw)[-20000:]}
+        logs = self.owned / ".tool-logs"
+        logs.mkdir(exist_ok=True)
+        log = logs / ("shell-" + uuid.uuid4().hex + ".log")
+        timed_out = False
+        with log.open("wb") as stream:
+            # Redirect directly to disk, rather than retaining compiler stdout
+            # of an arbitrarily long build in coordinator memory.
+            process = subprocess.Popen(argv, cwd=self.owned, env=env, stdout=stream,
+                                       stderr=subprocess.STDOUT, start_new_session=True)
+            try:
+                process.wait(timeout=timeout)
+            except subprocess.TimeoutExpired:
+                timed_out = True
+                process.kill()
+                process.wait()
+        # No provider credentials enter this environment. Still scrub log text
+        # using an overlap so exact redactions crossing chunk boundaries work.
+        clean = log.with_suffix(".clean")
+        with log.open("r", encoding="utf-8", errors="replace") as source, clean.open("w", encoding="utf-8") as target:
+            carry = ""
+            while True:
+                chunk = source.read(65536)
+                if not chunk:
+                    target.write(self.redact(carry))
+                    break
+                carry += chunk
+                if len(carry) > 16384:
+                    cut = len(carry) - 8192
+                    prefix = self.redact(carry[:cut])
+                    if not self.redact(carry).startswith(prefix):
+                        cut = max(0, cut - 8192)
+                        prefix = self.redact(carry[:cut])
+                    target.write(prefix)
+                    carry = carry[cut:]
+        clean.replace(log)
+        with log.open("rb") as stream:
+            stream.seek(max(0, log.stat().st_size - 24000))
+            tail = stream.read().decode("utf-8", errors="replace")
+        result = {"exit_code": process.returncode, "output": self.redact(tail),
+                  "log_path": log.relative_to(self.root).as_posix(), "log_bytes": log.stat().st_size}
+        if timed_out:
+            result["timeout"] = timeout
+        return result
 
     def fetch_url(self, url, path):
         import hashlib
