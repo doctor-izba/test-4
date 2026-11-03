@@ -1,0 +1,6 @@
+{
+  "state": "claimed_before_inference",
+  "run_id": "41598425296",
+  "maximum_usd": 3.7,
+  "note": "This authorization cannot be automatically reused, even if a run fails."
+}
