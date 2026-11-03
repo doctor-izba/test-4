@@ -1,0 +1,20 @@
+12:def wrap(theta):
+13-    return (theta + math.pi) % (2 * math.pi) - math.pi
+14-
+15-def transform(point, pose):
+16-    x,y=point; px,py,theta=pose; c,s=math.cos(theta),math.sin(theta)
+17-    return px+c*x-s*y, py+s*x+c*y
+18-
+                   '<text x="60" y="543" font-family="sans-serif" font-size="12">Not MATLAB/CoppeliaSim evidence. No contact dynamics or calibrated Pioneer model.</text>','</svg>'])
+    path.write_text('\n'.join(chunks),encoding='utf-8')
+
+def main():
+    parser=argparse.ArgumentParser(); parser.add_argument('--output',type=Path,default=Path(__file__).parent/'results'); parser.add_argument('--slip',type=float,default=0.)
+    args=parser.parse_args()
+    results=[run_case(name,test,speed,args.output,args.slip) for name,test,speed in [('goal','goal',.14),('approach','approach',.14),('corner_slow','corner',.08),('corner_fast','corner',.14)]]
+    report={'scope':'Supplementary surrogate only. Assignment explicitly requires MATLAB and CoppeliaSim.','assumptions':['Ideal instantaneous wheel-rate actuator','2D rectangular footprint and axis-aligned solid wall polygons','Ideal ray proximity sensors, no beam volume/noise','No rigid-body contact dynamics; stop at first geometric contact','Fixed declared geometry; not independently calibrated Pioneer dimensions'], 'cases':results}
+    (args.output/'metrics.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+    print(json.dumps(report,indent=2))
+
+if __name__=='__main__': main()
+.lake/packages/mathlib/Mathlib/Algebra/Order/ToIntervalMod.lean:74:def toIcoMod (a b : α) : α :=

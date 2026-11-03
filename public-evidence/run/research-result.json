@@ -1,0 +1,9 @@
+{
+  "state": "yielded",
+  "steps": 12,
+  "tool_calls": 28,
+  "final_text": "",
+  "cycle": 1,
+  "session_turns": 12,
+  "session_tools": 28
+}

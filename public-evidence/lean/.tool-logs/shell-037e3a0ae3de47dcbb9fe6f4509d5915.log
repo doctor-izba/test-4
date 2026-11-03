@@ -1,0 +1,48 @@
+def holdRun (limit : ℕ) : List Bool → ℕ
+  | [] => 0
+  | b :: bs => holdStep limit (holdRun limit bs) b
+
+def LastAllTrue : ℕ → List Bool → Prop
+  | 0, _ => True
+  | _ + 1, [] => False
+  | n + 1, b :: bs => b = true ∧ LastAllTrue n bs
+
+theorem holdRun_ge_lastAllTrue (limit n : ℕ) (bs : List Bool)
+    (hn : n ≤ limit) (h : n ≤ holdRun limit bs) : LastAllTrue n bs := by
+  induction bs generalizing n with
+  | nil =>
+      simp [holdRun] at h
+      subst h
+      simp [LastAllTrue]
+  | cons b bs ih =>
+      cases n with
+      | zero => simp [LastAllTrue]
+      | succ n =>
+          cases b with
+          | false => simp [holdRun, holdStep] at h
+          | true =>
+              have h' : n + 1 ≤ min (holdRun limit bs + 1) limit := by
+                simpa [holdRun, holdStep] using h
+              have h1 : n ≤ holdRun limit bs := by
+                have := le_trans h' (min_le_left (holdRun limit bs + 1) limit)
+                omega
+              have h2 : n ≤ limit := by
+                have := le_trans h' (min_le_right (holdRun limit bs + 1) limit)
+                omega
+              exact ⟨rfl, ih n h2 h1⟩
+
+theorem holdRun_success_contiguous (limit : ℕ) (bs : List Bool)
+    (h : holdRun limit bs = limit) : LastAllTrue limit bs := by
+  apply holdRun_ge_lastAllTrue limit limit bs le_rfl
+  omega
+
+theorem holdRun_reset (limit : ℕ) (bs : List Bool) :
+    holdRun limit (false :: bs) = 0 := by
+  simp [holdRun, holdStep]
+
+theorem holdStep_le (limit held : ℕ) (b : Bool) :
+    holdStep limit held b ≤ limit := by
+  cases b <;> simp [holdStep]
+
+/-- Zero body commands map to zero measured wheel-rate targets. -/
+theorem zero_command_zero_wheels (b r : ℝ) :
