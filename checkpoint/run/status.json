@@ -40,14 +40,12 @@
     "summary": "Transient retry allowance exhausted; all uncertain reservations retained"
   },
   "writer": {
-    "time": "2026-11-03T11:21:51.271326+00:00",
+    "time": "2026-11-03T11:23:37.235011+00:00",
     "role": "writer",
-    "event": "request",
-    "call_id": "writer-014ad5cf0bcc",
-    "attempt": 2,
-    "request_bytes": 19701,
-    "input_bound": 23797,
-    "max_output_tokens": 65536,
-    "requested_reasoning": "max"
+    "event": "request_retry",
+    "call_id": "writer-b206e6ba9493",
+    "summary": "HTTP 522",
+    "reservation_retained": true,
+    "attempt": 5
   }
 }
